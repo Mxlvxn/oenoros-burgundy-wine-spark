@@ -1,55 +1,71 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
-    <footer className="bg-wine-dark py-16">
+    <footer className="border-t border-border py-16">
       <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          {/* Logo */}
-          <div className="text-center md:text-left">
-            <span className="font-display text-2xl font-semibold text-gold-gradient tracking-[0.1em]">
-              OENOROS
-            </span>
-            <p className="font-body text-cream/60 text-sm mt-2">
-              L'excellence du marketing viticole
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+          {/* Brand */}
+          <div className="md:col-span-2">
+            <Link to="/">
+              <span className="font-display text-xl font-semibold text-primary tracking-[0.08em]">
+                OENOROS
+              </span>
+            </Link>
+            <p className="font-body text-muted-foreground text-sm mt-4 max-w-sm leading-relaxed">
+              Agence de communication spécialisée dans l'univers du vin. 
+              Basée en Bourgogne, nous accompagnons les acteurs viticoles 
+              vers l'excellence.
             </p>
           </div>
 
-          {/* Links */}
-          <nav className="flex items-center gap-8">
-            <a
-              href="#accueil"
-              className="font-body text-xs uppercase tracking-widest text-cream/60 hover:text-gold transition-colors duration-300"
-            >
-              Accueil
-            </a>
-            <a
-              href="#services"
-              className="font-body text-xs uppercase tracking-widest text-cream/60 hover:text-gold transition-colors duration-300"
-            >
-              Services
-            </a>
-            <a
-              href="#apropos"
-              className="font-body text-xs uppercase tracking-widest text-cream/60 hover:text-gold transition-colors duration-300"
-            >
-              À Propos
-            </a>
-            <a
-              href="#contact"
-              className="font-body text-xs uppercase tracking-widest text-cream/60 hover:text-gold transition-colors duration-300"
-            >
+          {/* Navigation */}
+          <div>
+            <h4 className="font-body text-xs uppercase tracking-widest text-muted-foreground mb-4">
+              Navigation
+            </h4>
+            <nav className="flex flex-col gap-3">
+              {[
+                { label: "Accueil", href: "/" },
+                { label: "Services", href: "/services" },
+                { label: "À Propos", href: "/a-propos" },
+                { label: "Contact", href: "/contact" },
+              ].map((item) => (
+                <Link
+                  key={item.label}
+                  to={item.href}
+                  className="font-body text-sm text-foreground/70 hover:text-primary transition-colors"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="font-body text-xs uppercase tracking-widest text-muted-foreground mb-4">
               Contact
-            </a>
-          </nav>
+            </h4>
+            <div className="flex flex-col gap-3 font-body text-sm text-foreground/70">
+              <span>contact@oenoros.fr</span>
+              <span>Bourgogne, France</span>
+            </div>
+          </div>
         </div>
 
-        {/* Divider */}
-        <div className="my-10 h-px bg-gold/20" />
-
-        {/* Copyright */}
-        <div className="text-center">
-          <p className="font-body text-cream/40 text-xs tracking-widest">
-            © 2025 OENOROS. Tous droits réservés. Basée en Bourgogne avec passion.
+        <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="font-body text-muted-foreground text-xs">
+            © {new Date().getFullYear()} Oenoros. Tous droits réservés.
           </p>
+          <div className="flex gap-6">
+            <a href="#" className="font-body text-xs text-muted-foreground hover:text-foreground transition-colors">
+              Mentions légales
+            </a>
+            <a href="#" className="font-body text-xs text-muted-foreground hover:text-foreground transition-colors">
+              Politique de confidentialité
+            </a>
+          </div>
         </div>
       </div>
     </footer>
