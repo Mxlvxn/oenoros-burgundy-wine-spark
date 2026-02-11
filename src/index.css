@@ -2,67 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap');
 
 @layer base {
   :root {
-    /* Oenoros Wine Palette */
-    --background: 30 20% 97%;
-    --foreground: 350 20% 10%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 8%;
 
-    --card: 30 15% 95%;
-    --card-foreground: 350 20% 10%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 8%;
 
-    --popover: 30 15% 95%;
-    --popover-foreground: 350 20% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 8%;
 
     /* Primary - Deep Burgundy Wine #560210 */
     --primary: 350 96% 17%;
-    --primary-foreground: 45 30% 90%;
+    --primary-foreground: 0 0% 100%;
 
-    /* Secondary - Warm Cream */
-    --secondary: 35 30% 92%;
-    --secondary-foreground: 350 96% 17%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 8%;
 
-    /* Muted - Soft Taupe */
-    --muted: 30 15% 88%;
-    --muted-foreground: 350 15% 40%;
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 45%;
 
-    /* Accent - Rich Gold */
-    --accent: 45 80% 45%;
-    --accent-foreground: 350 96% 12%;
-
-    /* Gold variations */
-    --gold: 45 80% 45%;
-    --gold-light: 45 70% 65%;
-    --gold-dark: 42 85% 35%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 8%;
 
     /* Wine variations */
     --wine: 350 96% 17%;
     --wine-light: 350 70% 25%;
     --wine-dark: 350 100% 10%;
 
-    /* Cream palette */
-    --cream: 35 40% 95%;
-    --cream-dark: 30 25% 88%;
+    /* Gold - subtle accent */
+    --gold: 40 60% 50%;
+    --gold-light: 40 50% 65%;
+    --gold-dark: 38 65% 40%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Cream */
+    --cream: 40 20% 97%;
+    --cream-dark: 35 15% 92%;
 
-    --border: 35 25% 85%;
-    --input: 35 25% 85%;
-    --ring: 45 80% 45%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --radius: 0.25rem;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 350 96% 17%;
 
-    /* Gradients */
-    --gradient-wine: linear-gradient(135deg, hsl(350 96% 17%) 0%, hsl(350 100% 10%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(45 80% 45%) 0%, hsl(42 85% 35%) 100%);
-    --gradient-hero: linear-gradient(180deg, hsl(350 96% 17% / 0.9) 0%, hsl(350 100% 10% / 0.95) 100%);
-
-    /* Shadows */
-    --shadow-elegant: 0 4px 30px hsl(350 96% 17% / 0.1);
-    --shadow-gold: 0 4px 20px hsl(45 80% 45% / 0.2);
+    --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -75,31 +62,23 @@
   }
 
   .dark {
-    --background: 350 30% 8%;
-    --foreground: 35 40% 95%;
-
-    --card: 350 25% 12%;
-    --card-foreground: 35 40% 95%;
-
-    --popover: 350 25% 12%;
-    --popover-foreground: 35 40% 95%;
-
-    --primary: 45 80% 45%;
-    --primary-foreground: 350 96% 10%;
-
-    --secondary: 350 30% 15%;
-    --secondary-foreground: 35 40% 95%;
-
-    --muted: 350 20% 18%;
-    --muted-foreground: 35 30% 70%;
-
-    --accent: 45 80% 50%;
-    --accent-foreground: 350 96% 10%;
-
-    --border: 350 20% 20%;
-    --input: 350 20% 20%;
-    --ring: 45 80% 45%;
-
+    --background: 0 0% 5%;
+    --foreground: 0 0% 95%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 350 96% 17%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 95%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 95%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 350 96% 17%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -118,7 +97,7 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'DM Sans', sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -129,57 +108,28 @@
     font-family: 'Playfair Display', serif;
   }
 
-  .font-elegant {
-    font-family: 'Cormorant Garamond', serif;
-  }
-
   .font-body {
-    font-family: 'Montserrat', sans-serif;
-  }
-}
-
-@layer components {
-  .text-gold-gradient {
-    background: linear-gradient(135deg, hsl(45 80% 55%) 0%, hsl(42 85% 40%) 50%, hsl(45 70% 60%) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-family: 'DM Sans', sans-serif;
   }
 
-  .bg-wine-gradient {
-    background: linear-gradient(135deg, hsl(350 96% 17%) 0%, hsl(350 100% 10%) 100%);
-  }
-
-  .border-gold {
-    border-color: hsl(45 80% 45%);
-  }
-
-  .shadow-elegant {
-    box-shadow: var(--shadow-elegant);
-  }
-
-  .shadow-gold {
-    box-shadow: var(--shadow-gold);
+  .font-sans {
+    font-family: 'Inter', sans-serif;
   }
 }
 
 @layer utilities {
   .animate-fade-up {
-    animation: fadeUp 0.8s ease-out forwards;
+    animation: fadeUp 0.6s ease-out forwards;
   }
 
   .animate-fade-in {
-    animation: fadeIn 1s ease-out forwards;
-  }
-
-  .animate-shimmer {
-    animation: shimmer 3s ease-in-out infinite;
+    animation: fadeIn 0.8s ease-out forwards;
   }
 
   @keyframes fadeUp {
     from {
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(20px);
     }
     to {
       opacity: 1;
@@ -188,20 +138,7 @@
   }
 
   @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  @keyframes shimmer {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.8;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 }
