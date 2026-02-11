@@ -28,68 +28,79 @@ const Header = () => {
   const isActive = (href: string) => location.pathname === href;
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-background/90 backdrop-blur-lg border-b border-border py-4"
-          : "bg-transparent py-6"
-      }`}
-    >
-      <div className="container mx-auto px-6 flex items-center justify-between">
-        <Link to="/" className="flex items-center">
-          <span className="font-display text-2xl font-semibold text-primary tracking-[0.08em]">
-            OENOROS
-          </span>
-        </Link>
+    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 px-6">
+      <div
+        className={`w-full max-w-6xl bg-primary text-primary-foreground rounded-full px-8 md:px-10 transition-all duration-300 ${
+          isScrolled ? "py-3" : "py-4"
+        }`}
+      >
+        <div className="flex items-center justify-between">
+          <Link to="/" className="flex items-center">
+            <span className="font-display text-lg md:text-xl font-semibold text-primary-foreground tracking-[0.08em]">
+              OENOROS
+            </span>
+          </Link>
 
-        <nav className="hidden md:flex items-center gap-10">
-          {navItems.map((item) => (
-            <Link
-              key={item.label}
-              to={item.href}
-              className={`font-body text-sm tracking-wide transition-colors duration-200 ${
-                isActive(item.href)
-                  ? "text-primary font-medium"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {item.label}
+          <nav className="hidden md:flex items-center gap-8">
+            {navItems.map((item) => (
+              <Link
+                key={item.label}
+                to={item.href}
+                className={`font-body text-sm tracking-wide transition-colors duration-200 ${
+                  isActive(item.href)
+                    ? "text-primary-foreground font-medium"
+                    : "text-primary-foreground/60 hover:text-primary-foreground"
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <Link to="/contact" className="hidden md:block">
+              <Button
+                variant="secondary"
+                size="sm"
+                className="rounded-full px-6 text-primary bg-primary-foreground hover:bg-primary-foreground/90"
+              >
+                Parlons de votre projet
+              </Button>
             </Link>
-          ))}
-        </nav>
 
-        <Link to="/contact" className="hidden md:block">
-          <Button variant="default" size="sm" className="rounded-full px-6">
-            Parlons de votre projet
-          </Button>
-        </Link>
-
-        <button
-          className="md:hidden text-foreground"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+            <button
+              className="md:hidden text-primary-foreground"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
+        </div>
       </div>
 
+      {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-background border-t border-border animate-fade-in">
-          <nav className="container mx-auto px-6 py-8 flex flex-col gap-6">
+        <div className="absolute top-full left-6 right-6 mt-2 bg-primary text-primary-foreground rounded-3xl p-6 animate-fade-in md:hidden max-w-6xl mx-auto">
+          <nav className="flex flex-col gap-4">
             {navItems.map((item) => (
               <Link
                 key={item.label}
                 to={item.href}
                 className={`font-body text-sm tracking-wide transition-colors ${
                   isActive(item.href)
-                    ? "text-primary font-medium"
-                    : "text-muted-foreground"
+                    ? "text-primary-foreground font-medium"
+                    : "text-primary-foreground/60"
                 }`}
               >
                 {item.label}
               </Link>
             ))}
-            <Link to="/contact">
-              <Button variant="default" size="default" className="rounded-full w-full mt-2">
+            <Link to="/contact" className="mt-2">
+              <Button
+                variant="secondary"
+                size="default"
+                className="rounded-full w-full text-primary bg-primary-foreground hover:bg-primary-foreground/90"
+              >
                 Parlons de votre projet
               </Button>
             </Link>
