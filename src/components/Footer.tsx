@@ -13,7 +13,7 @@ const Footer = () => {
                 OENOROS
               </span>
             </Link>
-            <p className="font-body text-primary-foreground/40 text-sm mt-6 max-w-sm leading-relaxed">
+            <p className="font-body text-primary-foreground/70 text-sm mt-6 max-w-sm leading-relaxed">
               Agence de communication premium spécialisée dans l'univers du vin. 
               Basée à Dijon, nous accompagnons les acteurs viticoles vers l'excellence.
             </p>
@@ -35,7 +35,7 @@ const Footer = () => {
                 <Link
                   key={item.label}
                   to={item.href}
-                  className="font-body text-sm text-primary-foreground/40 hover:text-gold transition-colors duration-300"
+                  className="font-body text-sm text-primary-foreground/60 hover:text-gold transition-colors duration-300"
                 >
                   {item.label}
                 </Link>
@@ -48,7 +48,7 @@ const Footer = () => {
             <h4 className="font-body text-[11px] uppercase tracking-[0.2em] text-gold/60 mb-6">
               Contact
             </h4>
-            <div className="flex flex-col gap-4 font-body text-sm text-primary-foreground/40">
+            <div className="flex flex-col gap-4 font-body text-sm text-primary-foreground/60">
               <a href="mailto:contact@oenoros.fr" className="hover:text-gold transition-colors duration-300">
                 contact@oenoros.fr
               </a>
@@ -58,14 +58,14 @@ const Footer = () => {
         </div>
 
         <div className="mt-20 pt-8 border-t border-primary-foreground/10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="font-body text-primary-foreground/25 text-xs tracking-wide">
+          <p className="font-body text-primary-foreground/40 text-xs tracking-wide">
             © {new Date().getFullYear()} Oenoros — Tous droits réservés
           </p>
           <div className="flex gap-8">
-            <a href="#" className="font-body text-xs text-primary-foreground/25 hover:text-gold/60 transition-colors duration-300">
+            <a href="#" className="font-body text-xs text-primary-foreground/40 hover:text-gold/60 transition-colors duration-300">
               Mentions légales
             </a>
-            <a href="#" className="font-body text-xs text-primary-foreground/25 hover:text-gold/60 transition-colors duration-300">
+            <a href="#" className="font-body text-xs text-primary-foreground/40 hover:text-gold/60 transition-colors duration-300">
               Confidentialité
             </a>
           </div>

@@ -136,7 +136,7 @@ const Services = () => {
             <h2 className="font-display text-4xl md:text-5xl text-primary-foreground mb-6">
               Prêt à démarrer ?
             </h2>
-            <p className="font-body text-primary-foreground/30 text-base max-w-lg mx-auto mb-12">
+            <p className="font-body text-primary-foreground/60 text-base max-w-lg mx-auto mb-12">
               Parlons de votre projet et trouvons la stratégie qui fera 
               rayonner votre maison.
             </p>
