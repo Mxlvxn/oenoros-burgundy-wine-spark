@@ -121,10 +121,10 @@ const Contact = () => {
 
               <div className="mt-4 p-8 bg-primary rounded-2xl relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-wine-dark/30 to-transparent pointer-events-none" />
-                <p className="font-display text-lg text-primary-foreground/70 italic leading-relaxed relative">
+                <p className="font-display text-lg text-primary-foreground italic leading-relaxed relative">
                   "Le vin est le miroir de l'homme."
                 </p>
-                <p className="font-body text-xs text-primary-foreground/25 mt-4 relative tracking-wide">— Alcée, poète grec</p>
+                <p className="font-body text-xs text-primary-foreground/50 mt-4 relative tracking-wide">— Alcée, poète grec</p>
               </div>
             </AnimatedSection>
           </div>

@@ -158,7 +158,7 @@ const Home = () => {
               <AnimatedSection key={stat.label} delay={index * 0.1}>
                 <div>
                   <span className="font-display text-4xl md:text-5xl text-gold">{stat.value}</span>
-                  <p className="font-body text-xs text-primary-foreground/30 mt-3 tracking-wide uppercase">{stat.label}</p>
+                  <p className="font-body text-xs text-primary-foreground/60 mt-3 tracking-wide uppercase">{stat.label}</p>
                 </div>
               </AnimatedSection>
             ))}
