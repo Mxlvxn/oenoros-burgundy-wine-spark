@@ -6,10 +6,10 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 40 20% 99%;
     --foreground: 0 0% 8%;
 
-    --card: 0 0% 98%;
+    --card: 40 15% 97%;
     --card-foreground: 0 0% 8%;
 
     --popover: 0 0% 100%;
@@ -17,15 +17,15 @@
 
     /* Primary - Deep Burgundy Wine #560210 */
     --primary: 350 96% 17%;
-    --primary-foreground: 0 0% 100%;
+    --primary-foreground: 40 30% 75%;
 
-    --secondary: 0 0% 96%;
+    --secondary: 40 12% 95%;
     --secondary-foreground: 0 0% 8%;
 
-    --muted: 0 0% 94%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 40 8% 93%;
+    --muted-foreground: 0 0% 42%;
 
-    --accent: 0 0% 96%;
+    --accent: 40 15% 94%;
     --accent-foreground: 0 0% 8%;
 
     /* Wine variations */
@@ -33,10 +33,10 @@
     --wine-light: 350 70% 25%;
     --wine-dark: 350 100% 10%;
 
-    /* Gold - subtle accent */
-    --gold: 40 60% 50%;
-    --gold-light: 40 50% 65%;
-    --gold-dark: 38 65% 40%;
+    /* Gold - luxe accent */
+    --gold: 38 55% 55%;
+    --gold-light: 40 45% 70%;
+    --gold-dark: 36 65% 40%;
 
     /* Cream */
     --cream: 40 20% 97%;
@@ -45,8 +45,8 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
+    --border: 40 10% 90%;
+    --input: 40 10% 88%;
     --ring: 350 96% 17%;
 
     --radius: 0.5rem;
@@ -69,7 +69,7 @@
     --popover: 0 0% 8%;
     --popover-foreground: 0 0% 95%;
     --primary: 350 96% 17%;
-    --primary-foreground: 0 0% 100%;
+    --primary-foreground: 40 30% 75%;
     --secondary: 0 0% 12%;
     --secondary-foreground: 0 0% 95%;
     --muted: 0 0% 15%;
@@ -115,6 +115,17 @@
   .font-sans {
     font-family: 'Inter', sans-serif;
   }
+
+  /* Smooth scroll */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Selection color */
+  ::selection {
+    background-color: hsl(350 96% 17% / 0.15);
+    color: hsl(350 96% 17%);
+  }
 }
 
 @layer utilities {
@@ -124,6 +135,11 @@
 
   .animate-fade-in {
     animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  /* Marquee scroll */
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
   }
 
   @keyframes fadeUp {
@@ -140,5 +156,28 @@
   @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* Gold gradient text */
+  .text-gradient-gold {
+    background: linear-gradient(135deg, hsl(38 55% 55%), hsl(40 45% 70%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Subtle line decoration */
+  .line-accent::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 1px;
+    background: hsl(38 55% 55%);
+    margin-top: 1.5rem;
   }
 }
