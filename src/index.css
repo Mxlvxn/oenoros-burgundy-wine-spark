@@ -142,6 +142,19 @@
     animation: marquee 30s linear infinite;
   }
 
+  .animate-marquee-slow {
+    animation: marquee 50s linear infinite;
+  }
+
+  .animate-marquee-reverse {
+    animation: marquee-reverse 40s linear infinite;
+  }
+
+  @keyframes marquee-reverse {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+
   @keyframes fadeUp {
     from {
       opacity: 0;
