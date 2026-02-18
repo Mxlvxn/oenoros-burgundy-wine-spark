@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import logoImg from "@/assets/logo-oenoros.png";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -41,11 +40,9 @@ const Header = () => {
       >
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3 group">
-            <img 
-              src={logoImg} 
-              alt="Oenoros" 
-              className="h-8 w-auto brightness-0 invert opacity-80 group-hover:opacity-100 transition-opacity"
-            />
+            <span className="font-display text-xl tracking-[0.18em] text-gold group-hover:text-gold-light transition-colors duration-300 uppercase">
+              Oenoros
+            </span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
