@@ -4,9 +4,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-// Components
-import Layout from "./components/Layout";
-import ScrollToTop from "./components/ScrollToTop.tsx"; // CORRECTION ICI : on utilise l'alias @
+// Components - VERIFIE BIEN LE "C" MAJUSCULE ICI
+import Layout from "./Components/Layout";
+import ScrollToTop from "./Components/ScrollToTop"; 
 
 // Pages
 import Home from "./pages/Home";
@@ -23,9 +23,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        {/* On place le ScrollToTop ici pour qu'il surveille chaque changement de page */}
         <ScrollToTop /> 
-        
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
@@ -33,8 +31,6 @@ const App = () => (
             <Route path="/services" element={<Services />} />
             <Route path="/contact" element={<Contact />} />
           </Route>
-          
-          {/* La page 404 est en dehors du Layout pour être propre */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
