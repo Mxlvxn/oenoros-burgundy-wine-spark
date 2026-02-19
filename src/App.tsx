@@ -4,9 +4,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-// Components - VERIFIE BIEN LE "C" MAJUSCULE ICI
-import Layout from "./Components/Layout";
-import ScrollToTop from "./Components/ScrollToTop"; 
+import Layout from "./components/Layout";
+import ScrollToTop from "./components/ScrollToTop";
 
 // Pages
 import Home from "./pages/Home";
