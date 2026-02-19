@@ -139,19 +139,19 @@ const Services = () => {
                 <span className="italic text-gold">comprend le vin</span>
               </h2>
               <p className="font-body text-primary-foreground/70 text-sm leading-relaxed max-w-md">
-                On n'est pas une agence généraliste qui s'est mise au vin. On est nés 
+                Nous ne sommes pas une agence généraliste qui s'est mise au vin. Nous sommes nés 
                 dedans. Cette connaissance terrain, c'est ce qui change tout dans la 
-                qualité de ce qu'on produit pour vous.
+                qualité de ce que l'on produit pour vous.
               </p>
             </AnimatedSection>
 
             <AnimatedSection delay={0.15}>
               <div className="space-y-0">
                 {[
-                  { label: "Expertise sectorielle", desc: "On connaît vos appellations, votre marché, vos acheteurs." },
+                  { label: "Expertise sectorielle", desc: "Nous connaissons vos appellations, votre marché, vos acheteurs." },
                   { label: "Vision globale", desc: "Stratégie, création, digital — tout sous un même toit." },
-                  { label: "Résultats mesurables", desc: "On ne fait pas que créer : on mesure, on ajuste, on optimise." },
-                  { label: "Partenariat durable", desc: "Pas un contrat ponctuel. Une relation construite dans la durée." },
+                  { label: "Résultats mesurables", desc: "Nous ne faisons pas que créer : nous mesurons, nous ajustons, nous optimisons." },
+                  { label: "Partenariat durable", desc: "Nous ne parlons pas d'un contrat ponctuel, mais d'une relation construite dans la durée." },
                 ].map((item, index) => (
                   <motion.div
                     key={item.label}
