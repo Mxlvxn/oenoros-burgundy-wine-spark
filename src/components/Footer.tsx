@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Instagram, Linkedin } from "lucide-react"; // Import des icônes
-import logoOenoros from "@/assets/logo-oenoros.png"; // On importe ton logo ici
+import { Instagram, Linkedin, Phone, Mail, MapPin } from "lucide-react"; 
+import logoOenoros from "@/assets/logo-oenoros.png"; 
 
 const Footer = () => {
   return (
@@ -11,20 +11,18 @@ const Footer = () => {
           
           {/* ─── 1. LOGO ET DESCRIPTION ─── */}
           <div className="md:col-span-2">
-            <Link to="/" className="inline-block mb-8">
-              {/* Remplacement du texte par ton image logo */}
+            <Link to="/" className="inline-block mb-10">
               <img 
                 src={logoOenoros} 
                 alt="Oenoros Logo" 
                 className="h-40 w-auto object-contain" 
                 onError={(e) => {
-                  // Si l'image ne charge pas, on affiche le texte en secours
                   e.currentTarget.style.display = 'none';
                   e.currentTarget.parentElement!.innerHTML = '<span class="font-display text-2xl text-gold tracking-[0.12em]">OENOROS</span>';
                 }}
               />
             </Link>
-            <p className="font-body text-primary-foreground/60 text-sm max-w-sm leading-relaxed mb-8 italic">
+            <p className="font-body text-primary-foreground/60 text-sm max-w-sm leading-relaxed italic">
               Agence de communication premium spécialisée dans l'univers du vin. 
               Basés à Dijon, nous accompagnons les acteurs viticoles vers l'excellence.
             </p>
@@ -39,7 +37,7 @@ const Footer = () => {
               {[
                 { label: "Accueil", href: "/" },
                 { label: "Services", href: "/services" },
-                { label: "A propos", href: "/a-propos" },
+                { label: "À propos", href: "/a-propos" },
                 { label: "Contact", href: "/contact" },
               ].map((item) => (
                 <Link
@@ -71,47 +69,4 @@ const Footer = () => {
                   Instagram
                 </a>
                 <a 
-                  href="https://www.linkedin.com/in/melvyn-guepet/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 font-body text-sm text-primary-foreground/50 hover:text-gold transition-all group"
-                >
-                  <Linkedin size={18} className="group-hover:scale-110 transition-transform" />
-                  LinkedIn
-                </a>
-              </div>
-
-              <div className="h-px w-8 bg-gold/20 my-2" />
-
-              <div className="flex flex-col gap-3 font-body text-sm text-primary-foreground/40">
-  <a href="mailto:contact@oenoros.fr" className="hover:text-gold transition-colors">
-    contact@oenoros.fr
-  </a>
-  {/* CORRECTION ICI : On ouvre bien la balise avant de la fermer */}
-  <a href="tel:+33766409854" className="hover:text-gold transition-colors">
-    +33 7 66 40 98 54
-  </a>
-  <span>Dijon, France</span>
-</div>
-
-        {/* ─── 4. PIED DE PAGE (Légal) ─── */}
-        <div className="mt-24 pt-10 border-t border-primary-foreground/5 flex flex-col md:row items-center justify-between gap-6">
-          <p className="font-body text-primary-foreground/30 text-[10px] uppercase tracking-widest">
-            © {new Date().getFullYear()} Oenoros — Excellence & Communication
-          </p>
-          <div className="flex gap-10">
-            {/* On garde les liens vides pour le moment, ils seront reliés plus tard */}
-            <Link to="#" className="font-body text-[10px] uppercase tracking-widest text-primary-foreground/30 hover:text-gold transition-colors">
-              Mentions légales
-            </Link>
-            <Link to="#" className="font-body text-[10px] uppercase tracking-widest text-primary-foreground/30 hover:text-gold transition-colors">
-              Confidentialité
-            </Link>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-};
-
-export default Footer;
+                  href="
