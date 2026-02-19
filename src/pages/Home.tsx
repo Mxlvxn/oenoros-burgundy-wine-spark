@@ -190,8 +190,8 @@ const Home = () => {
           </AnimatedText>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
             {[
-              { value: "15+", label: "Années d'expertise" },
-              { value: "50+", label: "Domaines accompagnés" },
+              { value: "3", label: "Années d'expertise" },
+              { value: "♾", label: "Passion pour le vin" },
               { value: "100%", label: "Clients satisfaits" },
               { value: "360°", label: "Approche globale" },
             ].map((stat, index) => (
