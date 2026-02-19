@@ -16,7 +16,7 @@ const Footer = () => {
               <img 
                 src={logoOenoros} 
                 alt="Oenoros Logo" 
-                className="h-12 w-auto object-contain" 
+                className="h-24 w-auto object-contain" 
                 onError={(e) => {
                   // Si l'image ne charge pas, on affiche le texte en secours
                   e.currentTarget.style.display = 'none';
@@ -25,8 +25,8 @@ const Footer = () => {
               />
             </Link>
             <p className="font-body text-primary-foreground/60 text-sm max-w-sm leading-relaxed mb-8 italic">
-              L'agence qui élève l'image des domaines d'exception. 
-              De la Bourgogne au monde entier.
+              Agence de communication premium spécialisée dans l'univers du vin. 
+              Basés à Dijon, nous accompagnons les acteurs viticoles vers l'excellence.
             </p>
           </div>
 
@@ -38,8 +38,8 @@ const Footer = () => {
             <nav className="flex flex-col gap-5">
               {[
                 { label: "Accueil", href: "/" },
-                { label: "Expertises", href: "/services" },
-                { label: "L'Agence", href: "/a-propos" },
+                { label: "Services", href: "/services" },
+                { label: "A propos", href: "/a-propos" },
                 { label: "Contact", href: "/contact" },
               ].map((item) => (
                 <Link
@@ -87,7 +87,7 @@ const Footer = () => {
                 <a href="mailto:contact@oenoros.fr" className="hover:text-gold transition-colors">
                   contact@oenoros.fr
                 </a>
-                <span>Dijon & Beaune, France</span>
+                <span>Dijon, France</span>
               </div>
             </div>
           </div>
