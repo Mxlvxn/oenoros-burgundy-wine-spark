@@ -222,7 +222,7 @@ const Contact = () => {
               {/* Questionnaire */}
               <div className="rounded-2xl border border-border p-7 hover:border-gold/30 transition-colors duration-300">
                 <p className="font-body text-[10px] uppercase tracking-[0.2em] text-muted-foreground/50 mb-3">
-                  Pas sûr par où commencer ?
+                  Vous ne savez pas par où commencer ?
                 </p>
                 <h4 className="font-display text-xl text-foreground mb-3">
                   Commencez par notre questionnaire
