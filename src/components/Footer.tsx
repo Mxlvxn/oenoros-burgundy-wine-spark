@@ -87,6 +87,8 @@ const Footer = () => {
                 <a href="mailto:contact@oenoros.fr" className="hover:text-gold transition-colors">
                   contact@oenoros.fr
                 </a>
+                  +33 7 66 40 98 54
+                </a>
                 <span>Dijon, France</span>
               </div>
             </div>
