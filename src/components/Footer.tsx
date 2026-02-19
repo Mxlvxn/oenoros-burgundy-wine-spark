@@ -69,7 +69,7 @@ const Footer = () => {
                   Instagram
                 </a>
                 <a 
-                  href="https://www.linkedin.com/company/oenoros"
+                  href="https://www.linkedin.com/in/melvyn-guepet/"
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 font-body text-sm text-primary-foreground/50 hover:text-gold transition-all group"
@@ -82,7 +82,7 @@ const Footer = () => {
               {/* Coordonnées */}
               <div className="flex flex-col gap-4">
                 <a 
-                  href="tel:+33000000000"
+                  href="tel:+33 7 66 40 98 54"
                   className="flex items-center gap-3 font-body text-sm text-primary-foreground/50 hover:text-gold transition-all group"
                 >
                   <Phone size={18} className="group-hover:scale-110 transition-transform" />
