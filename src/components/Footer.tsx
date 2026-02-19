@@ -16,7 +16,7 @@ const Footer = () => {
               <img 
                 src={logoOenoros} 
                 alt="Oenoros Logo" 
-                className="h-32 w-auto object-contain" 
+                className="h-40 w-auto object-contain" 
                 onError={(e) => {
                   // Si l'image ne charge pas, on affiche le texte en secours
                   e.currentTarget.style.display = 'none';
