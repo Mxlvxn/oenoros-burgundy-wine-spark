@@ -104,7 +104,7 @@ const About = () => {
                   Nos valeurs
                 </p>
                 <h2 className="font-display text-4xl md:text-5xl text-foreground mb-10 leading-tight">
-                  Ce en quoi <span className="italic text-primary">on croit</span>
+                  Ce qui nous <span className="italic text-primary">anime</span>
                 </h2>
               </AnimatedSection>
               <div className="space-y-0">
