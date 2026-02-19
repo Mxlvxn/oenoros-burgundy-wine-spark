@@ -2,9 +2,68 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import AnimatedSection, { AnimatedText } from "@/components/AnimatedSection";
 import heroImage from "@/assets/hero-wine-bottle.jpg";
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CLIENTS — Pour ajouter un partenaire, insère simplement son nom ici.
+// La section est statique si tout tient sur une ligne,
+// et passe automatiquement en marquee défilant dès que ça déborde.
+// ─────────────────────────────────────────────────────────────────────────────
+const CLIENTS: string[] = [
+  "Soyez les premiers !",
+];
+
+const ITEM_CLASSNAME =
+  "font-display text-xl text-foreground/15 whitespace-nowrap hover:text-foreground/35 transition-colors duration-700 cursor-default tracking-wide uppercase";
+
+const ClientsStrip = () => {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [needsMarquee, setNeedsMarquee] = useState(false);
+
+  useEffect(() => {
+    const check = () => {
+      const el = trackRef.current;
+      if (!el) return;
+      setNeedsMarquee(el.scrollWidth > el.parentElement!.clientWidth);
+    };
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const items = needsMarquee ? [...CLIENTS, ...CLIENTS, ...CLIENTS] : CLIENTS;
+
+  return (
+    <section className="py-16 overflow-hidden bg-background">
+      <AnimatedText>
+        <p className="font-body text-[10px] uppercase tracking-[0.35em] text-muted-foreground/50 text-center mb-10">
+          Ils nous font confiance
+        </p>
+      </AnimatedText>
+      <div className="relative overflow-hidden">
+        <div
+          ref={trackRef}
+          className={
+            needsMarquee
+              ? "flex animate-marquee-slow whitespace-nowrap"
+              : "flex justify-center items-center gap-16 px-8"
+          }
+        >
+          {items.map((name, i) => (
+            <span
+              key={`${name}-${i}`}
+              className={`${ITEM_CLASSNAME} ${needsMarquee ? "mx-8" : ""}`}
+            >
+              {name}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 
 const Home = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -100,28 +159,12 @@ const Home = () => {
 
       {/* ================================================================
           3. SECTION CLIENTS (Logos/Noms)
+          — Statique si tout tient sur une ligne,
+          — Marquee automatique dès que la liste déborde.
+          — Pour ajouter un client : modifier le tableau CLIENTS en haut.
           ================================================================
       */}
-      <section className="py-16 overflow-hidden bg-background">
-        <AnimatedText>
-          <p className="font-body text-[10px] uppercase tracking-[0.35em] text-muted-foreground/50 text-center mb-10">
-            Ils nous font confiance
-          </p>
-        </AnimatedText>
-        <div className="relative">
-          <div className="flex animate-marquee-slow whitespace-nowrap">
-            {[...Array(2)].map((_, i) => (
-              <div key={i} className="flex items-center gap-16 mx-8">
-                {["Soyez les premiers !"].map((name) => (
-                  <span key={`${name}-${i}`} className="font-display text-xl text-foreground/15 whitespace-nowrap hover:text-foreground/35 transition-colors duration-700 cursor-default tracking-wide uppercase">
-                    {name}
-                  </span>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ClientsStrip />
 
       {/* ================================================================
           4. SECTION SERVICES (Teaser des expertises)
@@ -191,7 +234,7 @@ const Home = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
             {[
               { value: "3", label: "Années d'expertise" },
-              { value: "♾", label: "Passion pour le vin" },
+              { value: "∞", label: "Passion pour le vin" },
               { value: "100%", label: "Clients satisfaits" },
               { value: "360°", label: "Approche globale" },
             ].map((stat, index) => (
