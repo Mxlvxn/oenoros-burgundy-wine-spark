@@ -107,7 +107,7 @@ const Home = () => {
             <div key={i} className="flex items-center gap-12 mx-6">
               {["Stratégie", "✦", "Branding", "✦", "Bourgogne", "✦", "Viticulture", "✦", "Luxe", "✦", "Export", "✦", "Prestige", "✦", "Digital", "✦"].map(
                 (tag, j) => (
-                  <span key={`${tag}-${i}-${j}`} className={`font-display whitespace-nowrap ${tag === "✦" ? "text-gold text-sm" : "text-primary-foreground/70 text-base italic"}`}>
+                  <span key={`${tag}-${i}-${j}`} className="text-4xl md:text-6xl font-display uppercase tracking-[0.25em] mx-8 opacity-40 hover:opacity-100 transition-opacity cursor-default">
                     {tag}
                   </span>
                 )
