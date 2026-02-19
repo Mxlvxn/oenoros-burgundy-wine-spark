@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Components
 import Layout from "./components/Layout";
-import ScrollToTop from "./components/ScrollToTop"; // L'import indispensable
+import ScrollToTop from "./src/components/ScrollToTop"; // L'import indispensable
 
 // Pages
 import Home from "./pages/Home";
