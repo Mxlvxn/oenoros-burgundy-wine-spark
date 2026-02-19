@@ -112,7 +112,7 @@ const Home = () => {
           <div className="flex animate-marquee-slow whitespace-nowrap">
             {[...Array(2)].map((_, i) => (
               <div key={i} className="flex items-center gap-16 mx-8">
-                {["Domaine Leflaive", "Maison Drouhin", "Château de Pommard", "Domaine Romanée", "Bouchard Père & Fils", "Clos de Vougeot", "Hospices de Beaune", "Louis Jadot"].map((name) => (
+                {["Soyez les premiers !"].map((name) => (
                   <span key={`${name}-${i}`} className="font-display text-xl text-foreground/15 whitespace-nowrap hover:text-foreground/35 transition-colors duration-700 cursor-default tracking-wide uppercase">
                     {name}
                   </span>
