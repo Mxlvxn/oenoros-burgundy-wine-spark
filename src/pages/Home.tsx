@@ -221,10 +221,10 @@ const Home = () => {
               <div className="relative">
                 <p className="font-body text-[11px] uppercase tracking-[0.3em] text-gold mb-4 flex items-center gap-3">
                   <span className="w-8 h-px bg-gold" />
-                  Définissons votre priorité
+                  Envie d'aider ?
                 </p>
                 <h3 className="font-display text-3xl md:text-4xl text-foreground mb-4">
-                  Faites le point en <span className="italic text-primary">3 minutes</span>
+                  Faites votre bonne action de <span className="italic text-primary">la journée !</span>
                 </h3>
                 <p className="font-body text-sm text-muted-foreground max-w-md leading-relaxed">
                   "L'incertitude est souvent le point de départ des plus grandes transformations stratégiques."
