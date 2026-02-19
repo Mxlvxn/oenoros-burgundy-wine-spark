@@ -5,11 +5,11 @@ const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // On force le retour en haut de la fenêtre à chaque changement d'URL
+    // Scroll tout en haut de la page (0,0) dès que le chemin change
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  return null; // Ce composant ne visuel rien, il agit juste en arrière-plan
+  return null;
 };
 
 export default ScrollToTop;
