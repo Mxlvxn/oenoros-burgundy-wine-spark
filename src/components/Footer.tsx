@@ -69,4 +69,55 @@ const Footer = () => {
                   Instagram
                 </a>
                 <a 
-                  href="
+                  href="https://www.linkedin.com/company/oenoros"
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 font-body text-sm text-primary-foreground/50 hover:text-gold transition-all group"
+                >
+                  <Linkedin size={18} className="group-hover:scale-110 transition-transform" />
+                  LinkedIn
+                </a>
+              </div>
+
+              {/* Coordonnées */}
+              <div className="flex flex-col gap-4">
+                <a 
+                  href="tel:+33000000000"
+                  className="flex items-center gap-3 font-body text-sm text-primary-foreground/50 hover:text-gold transition-all group"
+                >
+                  <Phone size={18} className="group-hover:scale-110 transition-transform" />
+                  +33 (0)0 00 00 00 00
+                </a>
+                <a 
+                  href="mailto:contact@oenoros.com"
+                  className="flex items-center gap-3 font-body text-sm text-primary-foreground/50 hover:text-gold transition-all group"
+                >
+                  <Mail size={18} className="group-hover:scale-110 transition-transform" />
+                  contact@oenoros.com
+                </a>
+                <span className="flex items-center gap-3 font-body text-sm text-primary-foreground/50">
+                  <MapPin size={18} />
+                  Dijon, Bourgogne
+                </span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* ─── LIGNE DE BAS ─── */}
+        <div className="mt-20 pt-8 border-t border-primary-foreground/10 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="font-body text-[11px] text-primary-foreground/30 tracking-widest uppercase">
+            © {new Date().getFullYear()} Oenoros. Tous droits réservés.
+          </p>
+          <p className="font-body text-[11px] text-primary-foreground/30 tracking-widest uppercase">
+            Agence de marketing viticole — Dijon
+          </p>
+        </div>
+
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
