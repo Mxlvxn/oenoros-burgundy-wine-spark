@@ -15,7 +15,7 @@ const Footer = () => {
             </Link>
             <p className="font-body text-primary-foreground/70 text-sm mt-6 max-w-sm leading-relaxed">
               Agence de communication premium spécialisée dans l'univers du vin. 
-              Basée à Dijon, nous accompagnons les acteurs viticoles vers l'excellence.
+              Basés à Dijon, nous accompagnons les acteurs viticoles vers l'excellence.
             </p>
             <div className="w-12 h-px bg-gold/30 mt-6" />
           </div>
