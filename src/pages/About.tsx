@@ -30,7 +30,7 @@ const About = () => {
             <AnimatedText delay={0.2}>
               <p className="font-body text-base text-muted-foreground leading-relaxed max-w-xl">
                 Oenoros, c'est une agence de communication qui vit et respire le vin. 
-                On conjugue une vraie connaissance du monde viticole avec des stratégies 
+                Nous conjuguons une vraie connaissance du monde viticole avec des stratégies 
                 modernes et ambitieuses.
               </p>
             </AnimatedText>
@@ -82,14 +82,14 @@ const About = () => {
                     changer le destin d'un domaine.
                   </p>
                   <p>
-                    On sait que chaque bouteille raconte une histoire forgée par des 
+                    Nous savons que chaque bouteille raconte une histoire forgée par des 
                     générations de savoir-faire. Notre rôle est de faire en sorte que le monde 
                     l'entende — avec les mots justes, les images qui font mouche, 
                     et une stratégie solide.
                   </p>
                   <p>
                     De la stratégie de marque à la production visuelle, du digital 
-                    à l'événementiel — on couvre tout, pour que votre communication 
+                    à l'événementiel — nous couvrons tout, pour que votre communication 
                     soit à la hauteur de votre excellence.
                   </p>
                 </div>
@@ -112,22 +112,22 @@ const About = () => {
                   { 
                     num: "01",
                     title: "Excellence", 
-                    desc: "On vise la perfection dans chaque détail — comme un grand vigneron qui ne lâche rien dans son chai." 
+                    desc: "Nous visons la perfection dans chaque détail — comme un grand vigneron qui ne lâche rien dans son chai." 
                   },
                   { 
                     num: "02",
                     title: "Authenticité", 
-                    desc: "Les meilleures marques sont celles qui restent vraies. On ne construira jamais quelque chose qui sonne faux." 
+                    desc: "Les meilleures marques sont celles qui restent vraies. Nous ne construirons jamais quelque chose qui sonne faux." 
                   },
                   { 
                     num: "03",
                     title: "Innovation", 
-                    desc: "Tradition viticole et stratégies contemporaines ne s'opposent pas. On les marie avec soin." 
+                    desc: "Tradition viticole et stratégies contemporaines ne s'opposent pas. Nous les marions avec soin." 
                   },
                   { 
                     num: "04",
                     title: "Proximité", 
-                    desc: "Basés en Bourgogne, on travaille avec vous — pas juste pour vous. Des relations durables, pas des contrats." 
+                    desc: "Basés en Bourgogne, nous travaillons avec vous — pas juste pour vous. Des relations durables, pas des contrats." 
                   },
                 ].map((value, index) => (
                   <AnimatedSection key={value.title} delay={index * 0.1}>
@@ -152,7 +152,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* ─── COMMENT ON FONCTIONNE ─── */}
+      {/* ─── COMMENT NOUS FONCTIONNONS ─── */}
       <section className="py-32 bg-cream border-y border-border relative overflow-hidden">
         <div className="absolute -right-20 top-20 w-72 h-72 rounded-full bg-gold/5 blur-3xl" />
         <div className="container mx-auto px-6 relative">
@@ -167,13 +167,13 @@ const About = () => {
                   Une équipe <span className="italic text-primary">engagée</span>,<br />pas un prestataire
                 </h2>
                 <p className="font-body text-sm text-muted-foreground leading-relaxed mb-6">
-                  On ne se contente pas de livrer des fichiers. On s'implique vraiment dans 
-                  votre succès — on apprend à connaître votre domaine, votre terroir, 
+                  Nous ne nous contentons pas de livrer des fichiers. Nous nous impliquons vraiment dans 
+                  votre succès — nous apprenons à connaître votre domaine, votre terroir, 
                   votre vision.
                 </p>
                 <p className="font-body text-sm text-muted-foreground leading-relaxed">
-                  Basés à Dijon, au cœur de la Bourgogne, on est à distance raisonnable 
-                  de la plupart des grands domaines français — et on n'hésite pas à se déplacer.
+                  Basés à Dijon, au cœur de la Bourgogne, nous sommes à distance raisonnable 
+                  de la plupart des grands domaines français — et nous n'hésitons pas à nous déplacer.
                 </p>
               </div>
             </AnimatedSection>
@@ -216,12 +216,12 @@ const About = () => {
               Travaillons ensemble
             </p>
             <h2 className="font-display text-5xl md:text-6xl lg:text-7xl text-foreground mb-8 leading-[1.0]">
-              On serait ravis<br />
+              Nous serions ravis<br />
               de vous <span className="italic text-primary">rencontrer</span>
             </h2>
             <p className="font-body text-muted-foreground text-base max-w-lg mx-auto mb-14 leading-relaxed">
               Partagez-nous votre projet — même si vous ne savez pas encore 
-              exactement par où commencer. C'est justement pour ça qu'on est là.
+              exactement par où commencer. C'est justement pour ça que nous sommes là.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/contact">
