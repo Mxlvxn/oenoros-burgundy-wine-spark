@@ -47,7 +47,7 @@ const Contact = () => {
             <AnimatedText delay={0.2}>
               <p className="font-body text-base text-muted-foreground leading-relaxed max-w-xl">
                 Un projet, une question, ou juste l'envie de discuter ? 
-                On vous répond sous 24h — sans engagement, sans jargon.
+                Nous vous répondons sous 24h — sans engagement, sans jargon.
               </p>
             </AnimatedText>
           </div>
@@ -228,11 +228,11 @@ const Contact = () => {
                   Commencez par notre questionnaire
                 </h4>
                 <p className="font-body text-xs text-muted-foreground leading-relaxed mb-6">
-                  3 minutes pour clarifier vos besoins et préparer notre premier échange. 
+                  3 minutes pour nous aider à comprendre vos besoins et préparer notre premier échange. 
                   Gratuit, sans engagement.
                 </p>
                 <a
-                  href="https://tally.so"
+                  href="https://tally.so/r/obE19M"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 font-body text-sm text-primary hover:text-wine-light transition-colors group font-medium"
