@@ -84,16 +84,15 @@ const Footer = () => {
               <div className="h-px w-8 bg-gold/20 my-2" />
 
               <div className="flex flex-col gap-3 font-body text-sm text-primary-foreground/40">
-                <a href="mailto:contact@oenoros.fr" className="hover:text-gold transition-colors">
-                  contact@oenoros.fr
-                </a>
-                  +33 7 66 40 98 54
-                </a>
-                <span>Dijon, France</span>
-              </div>
-            </div>
-          </div>
-        </div>
+  <a href="mailto:contact@oenoros.fr" className="hover:text-gold transition-colors">
+    contact@oenoros.fr
+  </a>
+  {/* CORRECTION ICI : On ouvre bien la balise avant de la fermer */}
+  <a href="tel:+33766409854" className="hover:text-gold transition-colors">
+    +33 7 66 40 98 54
+  </a>
+  <span>Dijon, France</span>
+</div>
 
         {/* ─── 4. PIED DE PAGE (Légal) ─── */}
         <div className="mt-24 pt-10 border-t border-primary-foreground/5 flex flex-col md:row items-center justify-between gap-6">
