@@ -86,7 +86,7 @@ const Footer = () => {
                   className="flex items-center gap-3 font-body text-sm text-primary-foreground/50 hover:text-gold transition-all group"
                 >
                   <Phone size={18} className="group-hover:scale-110 transition-transform" />
-                  +33 (0)0 00 00 00 00
+                  +33 7 66 40 98 54
                 </a>
                 <a 
                   href="mailto:contact@oenoros.com"
