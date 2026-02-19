@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Instagram, Linkedin } from "lucide-react"; // Import des icônes
-import logoOenoros from "@/assets/logo.png"; // On importe ton logo ici
+import logoOenoros from "@/assets/logo-oenoros.png"; // On importe ton logo ici
 
 const Footer = () => {
   return (
