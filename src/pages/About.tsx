@@ -161,7 +161,7 @@ const About = () => {
               <div className="lg:sticky lg:top-32">
                 <p className="font-body text-[11px] uppercase tracking-[0.3em] text-gold mb-4 flex items-center gap-3">
                   <span className="w-8 h-px bg-gold" />
-                  Comment on fonctionne
+                  Notre mode de fonctionnement
                 </p>
                 <h2 className="font-display text-4xl md:text-5xl text-foreground mb-8 leading-tight">
                   Une équipe <span className="italic text-primary">engagée</span>,<br />pas un prestataire
