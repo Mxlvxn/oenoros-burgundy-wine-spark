@@ -74,9 +74,10 @@ const Home = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Button variant="outline" size="lg" className="rounded-full px-10 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:border-primary-foreground/60">
-                Questionnaire gratuit
-              </Button>
+              <Button size="lg" className="rounded-full px-10 gap-2 group h-14 text-base bg-foreground text-background hover:bg-primary hover:text-white transition-all">
+  Questionnaire gratuit
+  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+</Button>
             </a>
           </motion.div>
         </motion.div>
