@@ -7,61 +7,73 @@ import AnimatedSection, { AnimatedText } from "@/components/AnimatedSection";
 const About = () => {
   return (
     <>
-      {/* Hero */}
-      <section className="pt-36 pb-20 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-cream-dark/40 to-transparent pointer-events-none" />
+      {/* ─── HERO ─── */}
+      <section className="pt-40 pb-24 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-cream-dark/50 to-transparent pointer-events-none" />
+        {/* Ligne décorative verticale */}
+        <div className="absolute left-[10%] top-0 w-px h-full bg-gradient-to-b from-transparent via-gold/10 to-transparent hidden lg:block" />
         <div className="container mx-auto px-6 relative">
-          <div className="max-w-3xl">
+          <div className="max-w-4xl">
             <AnimatedText>
-              <p className="font-body text-[11px] uppercase tracking-[0.3em] text-gold mb-6 flex items-center gap-3">
-                <span className="w-8 h-px bg-gold" />
+              <p className="font-body text-[11px] uppercase tracking-[0.35em] text-gold mb-8 flex items-center gap-3">
+                <span className="w-10 h-px bg-gold" />
                 À propos
               </p>
             </AnimatedText>
             <AnimatedText delay={0.1}>
-              <h1 className="font-display text-5xl md:text-7xl text-foreground leading-tight mb-8">
-                Nés au cœur de la{" "}
+              <h1 className="font-display text-6xl md:text-8xl text-foreground leading-[1.0] mb-10">
+                Nés au cœur<br />
+                de la{" "}
                 <span className="italic text-primary">Bourgogne</span>
               </h1>
             </AnimatedText>
             <AnimatedText delay={0.2}>
-              <p className="font-body text-base text-muted-foreground leading-relaxed max-w-2xl">
+              <p className="font-body text-base text-muted-foreground leading-relaxed max-w-xl">
                 Oenoros, c'est une agence de communication qui vit et respire le vin. 
                 On conjugue une vraie connaissance du monde viticole avec des stratégies 
-                de communication modernes et efficaces.
+                modernes et ambitieuses.
               </p>
             </AnimatedText>
           </div>
         </div>
       </section>
 
-      {/* Citation forte */}
-      <section className="py-20 bg-primary relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-wine-dark/50 to-transparent pointer-events-none" />
-        <div className="absolute right-0 top-0 w-72 h-72 rounded-full bg-wine-light/10 blur-3xl" />
-        <div className="container mx-auto px-6 relative">
-          <AnimatedSection>
-            <div className="max-w-3xl">
-              <p className="font-display text-2xl md:text-3xl text-primary-foreground italic leading-relaxed">
-                "Créons de la valeur autour de votre nom."
-              </p>
-              <div className="w-12 h-px bg-gold/50 mt-8" />
-              <p className="font-body text-xs text-primary-foreground/60 mt-4 tracking-[0.2em] uppercase">
-                Notre raison d'être
-              </p>
-            </div>
-          </AnimatedSection>
+      {/* ─── CITATION FORTE ─── */}
+      <section className="relative overflow-hidden">
+        <div className="bg-primary py-24 relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-wine-dark/60 to-wine-light/20 pointer-events-none" />
+          <div className="absolute -right-20 -top-20 w-80 h-80 rounded-full bg-gold/5 blur-3xl" />
+          <div className="container mx-auto px-6 relative">
+            <AnimatedSection>
+              <div className="max-w-4xl">
+                <span className="font-display text-8xl text-gold/20 leading-none block mb-4">"</span>
+                <p className="font-display text-3xl md:text-4xl text-primary-foreground leading-relaxed -mt-8">
+                  Créons de la valeur autour de votre nom.
+                </p>
+                <div className="flex items-center gap-4 mt-10">
+                  <div className="w-10 h-px bg-gold/40" />
+                  <p className="font-body text-xs text-primary-foreground/50 tracking-[0.2em] uppercase">
+                    Notre raison d'être
+                  </p>
+                </div>
+              </div>
+            </AnimatedSection>
+          </div>
         </div>
       </section>
 
-      {/* Story + Values */}
-      <section className="py-28 border-t border-border">
+      {/* ─── HISTOIRE + VALEURS ─── */}
+      <section className="py-32 border-t border-border">
         <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-28">
             <AnimatedSection>
               <div>
-                <h2 className="font-display text-3xl md:text-4xl text-foreground mb-8 line-accent">
+                <p className="font-body text-[11px] uppercase tracking-[0.3em] text-gold mb-4 flex items-center gap-3">
+                  <span className="w-8 h-px bg-gold" />
                   Notre histoire
+                </p>
+                <h2 className="font-display text-4xl md:text-5xl text-foreground mb-10 leading-tight">
+                  Une agence <span className="italic text-primary">enracinée</span>
                 </h2>
                 <div className="space-y-6 font-body text-muted-foreground leading-relaxed text-[15px]">
                   <p>
@@ -71,7 +83,7 @@ const About = () => {
                   </p>
                   <p>
                     On sait que chaque bouteille raconte une histoire forgée par des 
-                    générations de savoir-faire. Notre rôle ? Faire en sorte que le monde 
+                    générations de savoir-faire. Notre rôle est de faire en sorte que le monde 
                     l'entende — avec les mots justes, les images qui font mouche, 
                     et une stratégie solide.
                   </p>
@@ -84,42 +96,53 @@ const About = () => {
               </div>
             </AnimatedSection>
 
-            {/* Nos valeurs */}
+            {/* Valeurs */}
             <div>
               <AnimatedSection>
-                <h2 className="font-display text-3xl md:text-4xl text-foreground mb-10 line-accent">
+                <p className="font-body text-[11px] uppercase tracking-[0.3em] text-gold mb-4 flex items-center gap-3">
+                  <span className="w-8 h-px bg-gold" />
                   Nos valeurs
+                </p>
+                <h2 className="font-display text-4xl md:text-5xl text-foreground mb-10 leading-tight">
+                  Ce en quoi <span className="italic text-primary">on croit</span>
                 </h2>
               </AnimatedSection>
               <div className="space-y-0">
                 {[
                   { 
+                    num: "01",
                     title: "Excellence", 
                     desc: "On vise la perfection dans chaque détail — comme un grand vigneron qui ne lâche rien dans son chai." 
                   },
                   { 
+                    num: "02",
                     title: "Authenticité", 
                     desc: "Les meilleures marques sont celles qui restent vraies. On ne construira jamais quelque chose qui sonne faux." 
                   },
                   { 
+                    num: "03",
                     title: "Innovation", 
                     desc: "Tradition viticole et stratégies contemporaines ne s'opposent pas. On les marie avec soin." 
                   },
                   { 
+                    num: "04",
                     title: "Proximité", 
                     desc: "Basés en Bourgogne, on travaille avec vous — pas juste pour vous. Des relations durables, pas des contrats." 
                   },
                 ].map((value, index) => (
                   <AnimatedSection key={value.title} delay={index * 0.1}>
                     <motion.div
-                      whileHover={{ x: 6 }}
+                      whileHover={{ x: 8 }}
                       transition={{ duration: 0.3 }}
-                      className="py-7 border-b border-border last:border-0 group cursor-default"
+                      className="py-7 border-b border-border last:border-0 group cursor-default flex gap-6"
                     >
-                      <h3 className="font-display text-xl text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
-                        {value.title}
-                      </h3>
-                      <p className="font-body text-sm text-muted-foreground leading-relaxed">{value.desc}</p>
+                      <span className="font-body text-[11px] text-gold/40 mt-1 shrink-0 group-hover:text-gold transition-colors duration-300">{value.num}</span>
+                      <div>
+                        <h3 className="font-display text-xl text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
+                          {value.title}
+                        </h3>
+                        <p className="font-body text-sm text-muted-foreground leading-relaxed">{value.desc}</p>
+                      </div>
                     </motion.div>
                   </AnimatedSection>
                 ))}
@@ -129,38 +152,18 @@ const About = () => {
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="py-24 bg-cream border-y border-border">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
-            {[
-              { value: "15+", label: "Années d'expertise" },
-              { value: "50+", label: "Domaines accompagnés" },
-              { value: "100%", label: "Clients satisfaits" },
-              { value: "∞", label: "Passion pour le vin" },
-            ].map((stat, index) => (
-              <AnimatedSection key={stat.label} delay={index * 0.1}>
-                <div className="group">
-                  <span className="font-display text-5xl md:text-6xl text-primary group-hover:text-wine-light transition-colors duration-500">{stat.value}</span>
-                  <p className="font-body text-xs text-muted-foreground mt-4 uppercase tracking-[0.15em]">{stat.label}</p>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* L'équipe / approche humaine */}
-      <section className="py-28">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+      {/* ─── COMMENT ON FONCTIONNE ─── */}
+      <section className="py-32 bg-cream border-y border-border relative overflow-hidden">
+        <div className="absolute -right-20 top-20 w-72 h-72 rounded-full bg-gold/5 blur-3xl" />
+        <div className="container mx-auto px-6 relative">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
             <AnimatedSection>
-              <div>
+              <div className="lg:sticky lg:top-32">
                 <p className="font-body text-[11px] uppercase tracking-[0.3em] text-gold mb-4 flex items-center gap-3">
                   <span className="w-8 h-px bg-gold" />
                   Comment on fonctionne
                 </p>
-                <h2 className="font-display text-3xl md:text-4xl text-foreground mb-8">
+                <h2 className="font-display text-4xl md:text-5xl text-foreground mb-8 leading-tight">
                   Une équipe <span className="italic text-primary">engagée</span>,<br />pas un prestataire
                 </h2>
                 <p className="font-body text-sm text-muted-foreground leading-relaxed mb-6">
@@ -170,8 +173,7 @@ const About = () => {
                 </p>
                 <p className="font-body text-sm text-muted-foreground leading-relaxed">
                   Basés à Dijon, au cœur de la Bourgogne, on est à distance raisonnable 
-                  de la plupart des grands domaines français — et on n'hésite pas à 
-                  se déplacer quand c'est nécessaire.
+                  de la plupart des grands domaines français — et on n'hésite pas à se déplacer.
                 </p>
               </div>
             </AnimatedSection>
@@ -179,10 +181,10 @@ const About = () => {
             <AnimatedSection delay={0.15}>
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { label: "Réactivité", desc: "Réponse sous 24h, toujours." },
-                  { label: "Transparence", desc: "Pas de surprise sur les budgets ou les délais." },
-                  { label: "Expertise", desc: "Une connaissance réelle du monde du vin." },
-                  { label: "Résultats", desc: "Des actions mesurées, des résultats concrets." },
+                  { label: "Réactivité", desc: "Réponse sous 24h, toujours.", icon: "⚡" },
+                  { label: "Transparence", desc: "Pas de surprise sur les budgets ou les délais.", icon: "◎" },
+                  { label: "Expertise", desc: "Une connaissance réelle du monde du vin.", icon: "◈" },
+                  { label: "Résultats", desc: "Des actions mesurées, des résultats concrets.", icon: "↗" },
                 ].map((item, index) => (
                   <motion.div
                     key={item.label}
@@ -190,9 +192,10 @@ const About = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 + 0.2, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                    whileHover={{ y: -4 }}
-                    className="border border-border rounded-2xl p-6 cursor-default group hover:border-gold/30 hover:shadow-md hover:shadow-gold/5 transition-all duration-300"
+                    whileHover={{ y: -6 }}
+                    className="border border-border bg-background rounded-2xl p-7 cursor-default group hover:border-gold/30 hover:shadow-xl hover:shadow-gold/5 transition-all duration-400"
                   >
+                    <span className="text-xl mb-4 block text-gold/60 group-hover:text-gold transition-colors duration-300">{item.icon}</span>
                     <h4 className="font-display text-base text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
                       {item.label}
                     </h4>
@@ -205,29 +208,30 @@ const About = () => {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-36 bg-cream border-t border-border">
+      {/* ─── CTA ─── */}
+      <section className="py-36 relative overflow-hidden">
         <div className="container mx-auto px-6 text-center">
           <AnimatedSection>
-            <p className="font-body text-[11px] uppercase tracking-[0.3em] text-gold mb-6">
+            <p className="font-body text-[11px] uppercase tracking-[0.35em] text-gold mb-8">
               Travaillons ensemble
             </p>
-            <h2 className="font-display text-4xl md:text-5xl text-foreground mb-6">
-              On serait ravis de vous rencontrer
+            <h2 className="font-display text-5xl md:text-6xl lg:text-7xl text-foreground mb-8 leading-[1.0]">
+              On serait ravis<br />
+              de vous <span className="italic text-primary">rencontrer</span>
             </h2>
-            <p className="font-body text-muted-foreground text-base max-w-lg mx-auto mb-12 leading-relaxed">
-              Partagez-nous votre projet — même si vous ne savez pas encore exactement 
-              par où commencer. On est là pour ça.
+            <p className="font-body text-muted-foreground text-base max-w-lg mx-auto mb-14 leading-relaxed">
+              Partagez-nous votre projet — même si vous ne savez pas encore 
+              exactement par où commencer. C'est justement pour ça qu'on est là.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/contact">
-                <Button size="lg" className="rounded-full px-10 gap-2 group">
-                  Nous contacter 
+                <Button size="lg" className="rounded-full px-12 gap-2 group h-14 text-base">
+                  Nous contacter
                   <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
               <Link to="/services">
-                <Button variant="outline" size="lg" className="rounded-full px-10 border-border hover:border-primary hover:text-primary">
+                <Button variant="outline" size="lg" className="rounded-full px-12 border-border hover:border-primary hover:text-primary h-14 text-base">
                   Voir nos services
                 </Button>
               </Link>
