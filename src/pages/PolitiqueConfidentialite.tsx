@@ -5,9 +5,9 @@ const sections = [
   {
     title: "Qui sommes-nous ?",
     content: [
-      "Oenoros est un projet d'agence de communication spécialisée dans le marketing viticole, porté par Melvyn Guépet, domicilié à Dijon (21), France.",
-      "Le site www.oenoros.fr est un site vitrine. La seule collecte de données personnelles s'effectue via le formulaire de contact.",
-      "Contact : contact@oenoros.fr",
+      "Oenoros est un projet d'agence de communication spécialisée dans le marketing viticole, porté par Melvyn GUEPET, domicilié à Dijon (21), France.",
+      "Le site www.oenoros.com est un site vitrine. La seule collecte de données personnelles s'effectue via le formulaire de contact.",
+      "Contact : contact@oenoros.com",
     ],
   },
   {
@@ -57,7 +57,7 @@ const sections = [
       "**Droit à l'effacement** — vous pouvez demander la suppression de vos données.",
       "**Droit d'opposition** — vous pouvez vous opposer au traitement de vos données.",
       "**Droit à la portabilité** — vous pouvez demander vos données dans un format structuré.",
-      "Pour exercer l'un de ces droits, contactez-nous à : contact@oenoros.fr — nous vous répondrons dans un délai maximum de 30 jours.",
+      "Pour exercer l'un de ces droits, contactez-nous à : contact@oenoros.com — nous vous répondrons dans un délai maximum de 30 jours.",
     ],
   },
   {
@@ -168,11 +168,11 @@ const PolitiqueConfidentialite = () => {
                   vous répondre sous 30 jours.
                 </p>
                 <a
-                  href="mailto:contact@oenoros.fr?subject=Demande RGPD"
+                  href="mailto:contact@oenoros.com?subject=Demande RGPD"
                   className="inline-flex items-center gap-2 font-body text-sm text-gold hover:text-gold/70 transition-colors duration-300 uppercase tracking-[0.15em]"
                 >
                   <span className="w-6 h-px bg-gold" />
-                  contact@oenoros.fr
+                  contact@oenoros.com
                 </a>
               </div>
             </AnimatedSection>
