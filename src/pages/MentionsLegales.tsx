@@ -5,12 +5,12 @@ const sections = [
     title: "Éditeur du site",
     content: [
       "Le présent site internet accessible à l'adresse www.oenoros.fr est édité à titre personnel par :",
-      "**Melvyn Guépet**",
-      "Projet en cours de création sous le nom commercial : Oenoros",
+      "**Melvyn GUEPET**",
+      "Projet en cours de création sous le nom commercial : OENOROS",
       "Domiciliation : Dijon (21000), Bourgogne, France",
-      "Email : contact@oenoros.fr",
+      "Email : contact@oenoros.com",
       "Téléphone : +33 7 66 40 98 54",
-      "Note : Oenoros est actuellement un projet commercial non encore constitué en société. Toute démarche contractuelle est effectuée à titre personnel par les porteurs du projet.",
+      "Note : OENOROS est actuellement un projet commercial non encore constitué en société. Toute démarche contractuelle est effectuée à titre personnel par les porteurs du projet.",
     ],
   },
   {
@@ -28,15 +28,15 @@ const sections = [
     content: [
       "L'ensemble des éléments constituant ce site (textes, visuels, logo, typographies, structure, code) est protégé par le droit d'auteur et appartient exclusivement à Oenoros / ses porteurs de projet, sauf mention contraire.",
       "Toute reproduction, représentation, modification, publication ou adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite sans l'autorisation écrite préalable des éditeurs.",
-      "Le logo Oenoros, la charte graphique et tous les visuels produits pour ce site sont des créations originales protégées.",
+      "Le logo OENOROS, la charte graphique et tous les visuels produits pour ce site sont des créations originales protégées.",
     ],
   },
   {
     title: "Limitation de responsabilité",
     content: [
-      "Les informations présentes sur ce site sont fournies à titre indicatif. Oenoros s'efforce de maintenir le site à jour et exact, mais ne saurait garantir l'exhaustivité ou l'absence d'erreurs des informations publiées.",
-      "Oenoros ne pourra être tenu responsable des dommages directs ou indirects résultant de l'accès au site ou de l'utilisation des informations qu'il contient.",
-      "Des liens hypertextes peuvent pointer vers des sites tiers. Oenoros n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu.",
+      "Les informations présentes sur ce site sont fournies à titre indicatif. OENOROS s'efforce de maintenir le site à jour et exact, mais ne saurait garantir l'exhaustivité ou l'absence d'erreurs des informations publiées.",
+      "OENOROS ne pourra être tenu responsable des dommages directs ou indirects résultant de l'accès au site ou de l'utilisation des informations qu'il contient.",
+      "Des liens hypertextes peuvent pointer vers des sites tiers. OENOROS n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu.",
     ],
   },
   {
@@ -82,7 +82,7 @@ const MentionsLegales = () => {
               <p className="font-body text-base text-muted-foreground leading-relaxed max-w-xl">
                 Conformément à la loi française n°2004-575 du 21 juin 2004 pour la 
                 confiance dans l'économie numérique, voici les informations légales 
-                relatives au site Oenoros.
+                relatives au site OENOROS.
               </p>
             </AnimatedText>
           </div>
