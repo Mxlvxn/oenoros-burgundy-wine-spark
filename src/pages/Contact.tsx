@@ -217,7 +217,7 @@ const Contact = () => {
               
               {/* Infos de contact */}
               <div className="space-y-8">
-                <a href="mailto:contact@oenoros.fr" className="flex items-start gap-4 group">
+                <a href="mailto:contact@oenoros.com" className="flex items-start gap-4 group">
                   <div className="w-10 h-10 rounded-xl bg-cream flex items-center justify-center border border-border group-hover:border-gold/30 group-hover:bg-gold/5 transition-all duration-300 shrink-0">
                     <Mail className="w-3.5 h-3.5 text-gold" strokeWidth={1.5} />
                   </div>
