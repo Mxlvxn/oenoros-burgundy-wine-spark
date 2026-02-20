@@ -253,3 +253,32 @@ const Contact = () => {
 
               <div className="rounded-2xl border border-border p-7 hover:border-gold/30 transition-colors duration-300">
                 <p className="font-body text-[10px] uppercase tracking-[0.2em] text-muted-foreground/50 mb-3">
+                  Citation
+                </p>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentQuote}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <p className="font-display text-lg text-foreground leading-snug mb-3 italic">
+                      "{quotes[currentQuote].text}"
+                    </p>
+                    <p className="font-body text-[11px] text-muted-foreground/60 uppercase tracking-[0.15em]">
+                      — {quotes[currentQuote].author}
+                    </p>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default Contact;
