@@ -16,43 +16,56 @@ const contactReasons = [
 ];
 
 const quotes = [
-  {
-    text: "Le vin est le miroir de l'homme.",
-    author: "Alcée, poète grec"
-  },
-  {
-    text: "Le vin est de l'eau emplie de soleil.",
-    author: "Galilée"
-  },
-  {
-    text: "En Bourgogne, quand on parle d'un 'climat', on ne lève pas les yeux au ciel, on les baisse sur la terre.",
-    author: "Bernard Pivot"
-  },
-  {
-    text: "Le vin est la partie intellectuelle d'un repas.",
-    author: "Alexandre Dumas"
-  },
-  {
-    text: "Dieu n'a fait que l'eau, mais l'homme a fait le vin.",
-    author: "Victor Hugo"
-  }
+  { text: "Le vin est le miroir de l'homme.", author: "Alcée, poète grec" },
+  { text: "Le vin est de l'eau emplie de soleil.", author: "Galilée" },
+  { text: "En Bourgogne, quand on parle d'un 'climat', on ne lève pas les yeux au ciel, on les baisse sur la terre.", author: "Bernard Pivot" },
+  { text: "Le vin est la partie intellectuelle d'un repas.", author: "Alexandre Dumas" },
+  { text: "Dieu n'a fait que l'eau, mais l'homme a fait le vin.", author: "Victor Hugo" }
 ];
 
 const Contact = () => {
   const [selectedReason, setSelectedReason] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [currentQuote, setCurrentQuote] = useState(0);
 
+  // Animation des citations (15s)
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentQuote((prev) => (prev + 1) % quotes.length);
-    }, 15000); // Change toutes les 15 secondes
+    }, 15000);
     return () => clearInterval(timer);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Logique d'envoi vers Formspree
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSent(true);
+    setLoading(true);
+
+    const formData = new FormData(e.currentTarget);
+    if (selectedReason) {
+      formData.append("Sujet choisi", selectedReason);
+    }
+
+    try {
+      const response = await fetch("https://formspree.io/f/mqedddba", {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        setSent(true);
+      } else {
+        alert("Oups ! Une erreur est survenue. Réessayez ou contactez-nous par mail.");
+      }
+    } catch (error) {
+      alert("Erreur réseau. Vérifiez votre connexion.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -90,7 +103,6 @@ const Contact = () => {
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 lg:gap-24 pt-20">
             
-            {/* Formulaire */}
             <AnimatedSection className="lg:col-span-3">
               <AnimatePresence mode="wait">
                 {sent ? (
@@ -111,16 +123,11 @@ const Contact = () => {
                     <div>
                       <h3 className="font-display text-4xl text-foreground mb-4">Message envoyé</h3>
                       <p className="font-body text-muted-foreground text-sm leading-relaxed max-w-sm">
-                        Merci ! On a bien reçu votre message et on reviendra vers vous 
-                        sous 24h. En attendant, n'hésitez pas à explorer nos services.
+                        Merci ! Nous avons bien reçu votre message et reviendrons vers vous 
+                        sous 24h. En attendant, n'hésitez pas à explorer nos services et visiter nos réseaux sociaux.
                       </p>
                     </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="rounded-full mt-2"
-                      onClick={() => setSent(false)}
-                    >
+                    <Button variant="outline" size="sm" className="rounded-full mt-2" onClick={() => setSent(false)}>
                       Envoyer un autre message
                     </Button>
                   </motion.div>
@@ -139,10 +146,9 @@ const Contact = () => {
                       </label>
                       <div className="flex flex-wrap gap-2">
                         {contactReasons.map((reason) => (
-                          <motion.button
+                          <button
                             key={reason}
                             type="button"
-                            whileTap={{ scale: 0.97 }}
                             onClick={() => setSelectedReason(reason === selectedReason ? null : reason)}
                             className={`font-body text-xs px-5 py-2.5 rounded-full border transition-all duration-200 ${
                               selectedReason === reason
@@ -151,17 +157,16 @@ const Contact = () => {
                             }`}
                           >
                             {reason}
-                          </motion.button>
+                          </button>
                         ))}
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label className="font-body text-[11px] uppercase tracking-[0.2em] text-foreground mb-3 block">
-                          Nom
-                        </label>
+                        <label className="font-body text-[11px] uppercase tracking-[0.2em] text-foreground mb-3 block">Nom</label>
                         <Input
+                          name="Nom"
                           type="text"
                           placeholder="Votre nom"
                           required
@@ -169,12 +174,11 @@ const Contact = () => {
                         />
                       </div>
                       <div>
-                        <label className="font-body text-[11px] uppercase tracking-[0.2em] text-foreground mb-3 block">
-                          Email
-                        </label>
+                        <label className="font-body text-[11px] uppercase tracking-[0.2em] text-foreground mb-3 block">Email</label>
                         <Input
+                          name="Email"
                           type="email"
-                          placeholder="votre@email.com"
+                          placeholder="votrenom@email.com"
                           required
                           className="rounded-xl border-border/60 bg-transparent focus:border-primary h-13 font-body text-sm"
                         />
@@ -182,10 +186,9 @@ const Contact = () => {
                     </div>
 
                     <div>
-                      <label className="font-body text-[11px] uppercase tracking-[0.2em] text-foreground mb-3 block">
-                        Domaine / Entreprise
-                      </label>
+                      <label className="font-body text-[11px] uppercase tracking-[0.2em] text-foreground mb-3 block">Domaine / Entreprise</label>
                       <Input
+                        name="Entreprise"
                         type="text"
                         placeholder="Nom de votre domaine ou entreprise"
                         className="rounded-xl border-border/60 bg-transparent focus:border-primary h-13 font-body text-sm"
@@ -193,18 +196,18 @@ const Contact = () => {
                     </div>
 
                     <div>
-                      <label className="font-body text-[11px] uppercase tracking-[0.2em] text-foreground mb-3 block">
-                        Votre projet
-                      </label>
+                      <label className="font-body text-[11px] uppercase tracking-[0.2em] text-foreground mb-3 block">Votre projet</label>
                       <Textarea
-                        placeholder="Décrivez-nous votre projet, vos ambitions, ou simplement ce qui vous passe par la tête..."
+                        name="Message"
+                        placeholder="Décrivez-nous votre projet, vos ambitions..."
                         rows={6}
+                        required
                         className="rounded-xl resize-none border-border/60 bg-transparent focus:border-primary font-body text-sm"
                       />
                     </div>
 
-                    <Button type="submit" size="lg" className="rounded-full px-12 gap-2 group h-14 text-base w-full sm:w-auto">
-                      Envoyer le message
+                    <Button type="submit" size="lg" disabled={loading} className="rounded-full px-12 gap-2 group h-14 text-base w-full sm:w-auto">
+                      {loading ? "Envoi..." : "Envoyer le message"}
                       <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </motion.form>
@@ -214,10 +217,8 @@ const Contact = () => {
 
             {/* Colonne info */}
             <AnimatedSection className="lg:col-span-2 flex flex-col gap-10 lg:pt-2" delay={0.15}>
-              
-              {/* Infos de contact */}
               <div className="space-y-8">
-                <a href="mailto:contact@oenoros.com" className="flex items-start gap-4 group">
+                <a href="mailto:contact@oenoros.fr" className="flex items-start gap-4 group">
                   <div className="w-10 h-10 rounded-xl bg-cream flex items-center justify-center border border-border group-hover:border-gold/30 group-hover:bg-gold/5 transition-all duration-300 shrink-0">
                     <Mail className="w-3.5 h-3.5 text-gold" strokeWidth={1.5} />
                   </div>
@@ -250,58 +251,5 @@ const Contact = () => {
 
               <div className="w-full h-px bg-border" />
 
-              {/* Questionnaire */}
               <div className="rounded-2xl border border-border p-7 hover:border-gold/30 transition-colors duration-300">
                 <p className="font-body text-[10px] uppercase tracking-[0.2em] text-muted-foreground/50 mb-3">
-                  Vous ne savez pas par où commencer ?
-                </p>
-                <h4 className="font-display text-xl text-foreground mb-3">
-                  Commencez par notre questionnaire
-                </h4>
-                <p className="font-body text-xs text-muted-foreground leading-relaxed mb-6">
-                  3 minutes pour nous aider à comprendre vos besoins et préparer notre premier échange. 
-                  Gratuit, sans engagement.
-                </p>
-                <a
-                  href="https://tally.so/r/obE19M"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 font-body text-sm text-primary hover:text-wine-light transition-colors group font-medium"
-                >
-                  Répondre au questionnaire
-                  <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
-              </div>
-
-              {/* Bloc Citations Animé */}
-              <div className="p-8 bg-primary rounded-2xl relative overflow-hidden min-h-[180px] flex flex-col justify-center">
-                <div className="absolute inset-0 bg-gradient-to-br from-wine-dark/40 to-transparent pointer-events-none" />
-                <span className="font-display text-5xl text-gold/20 leading-none block mb-2 relative">"</span>
-                
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentQuote}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="relative"
-                  >
-                    <p className="font-display text-lg text-primary-foreground leading-relaxed -mt-3">
-                      {quotes[currentQuote].text}
-                    </p>
-                    <p className="font-body text-xs text-primary-foreground/40 mt-5 relative tracking-[0.15em] uppercase">
-                      — {quotes[currentQuote].author}
-                    </p>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
-    </>
-  );
-};
-
-export default Contact;
