@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,9 +15,40 @@ const contactReasons = [
   "Autre",
 ];
 
+const quotes = [
+  {
+    text: "Le vin est le miroir de l'homme.",
+    author: "Alcée, poète grec"
+  },
+  {
+    text: "Le vin est de l'eau emplie de soleil.",
+    author: "Galilée"
+  },
+  {
+    text: "En Bourgogne, quand on parle d'un 'climat', on ne lève pas les yeux au ciel, on les baisse sur la terre.",
+    author: "Bernard Pivot"
+  },
+  {
+    text: "Le vin est la partie intellectuelle d'un repas.",
+    author: "Alexandre Dumas"
+  },
+  {
+    text: "Dieu n'a fait que l'eau, mais l'homme a fait le vin.",
+    author: "Victor Hugo"
+  }
+];
+
 const Contact = () => {
   const [selectedReason, setSelectedReason] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
+  const [currentQuote, setCurrentQuote] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentQuote((prev) => (prev + 1) % quotes.length);
+    }, 15000); // Change toutes les 15 secondes
+    return () => clearInterval(timer);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -242,14 +273,28 @@ const Contact = () => {
                 </a>
               </div>
 
-              {/* Citation */}
-              <div className="p-8 bg-primary rounded-2xl relative overflow-hidden">
+              {/* Bloc Citations Animé */}
+              <div className="p-8 bg-primary rounded-2xl relative overflow-hidden min-h-[180px] flex flex-col justify-center">
                 <div className="absolute inset-0 bg-gradient-to-br from-wine-dark/40 to-transparent pointer-events-none" />
                 <span className="font-display text-5xl text-gold/20 leading-none block mb-2 relative">"</span>
-                <p className="font-display text-lg text-primary-foreground leading-relaxed relative -mt-3">
-                  Le vin est le miroir de l'homme.
-                </p>
-                <p className="font-body text-xs text-primary-foreground/40 mt-5 relative tracking-[0.15em] uppercase">— Alcée, poète grec</p>
+                
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentQuote}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="relative"
+                  >
+                    <p className="font-display text-lg text-primary-foreground leading-relaxed -mt-3">
+                      {quotes[currentQuote].text}
+                    </p>
+                    <p className="font-body text-xs text-primary-foreground/40 mt-5 relative tracking-[0.15em] uppercase">
+                      — {quotes[currentQuote].author}
+                    </p>
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </AnimatedSection>
           </div>
