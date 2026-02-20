@@ -1,29 +1,30 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Instagram, Linkedin, Phone, Mail, MapPin } from "lucide-react"; 
-import logoOenoros from "@/assets/logo-oenoros.png"; 
+import { Instagram, Linkedin, Phone, Mail, MapPin } from "lucide-react";
+import logoOenoros from "@/assets/logo-oenoros.png";
 
 const Footer = () => {
   return (
     <footer className="bg-primary text-primary-foreground border-t border-primary-foreground/5">
       <div className="container mx-auto px-6 py-24">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-16">
-          
+
           {/* ─── 1. LOGO ET DESCRIPTION ─── */}
           <div className="md:col-span-2">
             <Link to="/" className="inline-block mb-10">
-              <img 
-                src={logoOenoros} 
-                alt="Oenoros Logo" 
-                className="h-40 w-auto object-contain" 
+              <img
+                src={logoOenoros}
+                alt="Oenoros Logo"
+                className="h-40 w-auto object-contain"
                 onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                  e.currentTarget.parentElement!.innerHTML = '<span class="font-display text-2xl text-gold tracking-[0.12em]">OENOROS</span>';
+                  e.currentTarget.style.display = "none";
+                  e.currentTarget.parentElement!.innerHTML =
+                    '<span class="font-display text-2xl text-gold tracking-[0.12em]">OENOROS</span>';
                 }}
               />
             </Link>
             <p className="font-body text-primary-foreground/60 text-sm max-w-sm leading-relaxed italic">
-              Agence de communication premium spécialisée dans l'univers du vin. 
+              Agence de communication premium spécialisée dans l'univers du vin.
               Basés à Dijon, nous accompagnons les acteurs viticoles vers l'excellence.
             </p>
           </div>
@@ -57,20 +58,20 @@ const Footer = () => {
               Nous suivre
             </h4>
             <div className="flex flex-col gap-6">
-              {/* Liens Réseaux Sociaux */}
+              {/* Réseaux sociaux */}
               <div className="flex flex-col gap-4">
-                <a 
-                  href="https://www.instagram.com/agence.oenoros" 
-                  target="_blank" 
+                <a
+                  href="https://www.instagram.com/agence.oenoros"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 font-body text-sm text-primary-foreground/50 hover:text-gold transition-all group"
                 >
                   <Instagram size={18} className="group-hover:scale-110 transition-transform" />
                   Instagram
                 </a>
-                <a 
+                <a
                   href="https://www.linkedin.com/in/melvyn-guepet/"
-                  target="_blank" 
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 font-body text-sm text-primary-foreground/50 hover:text-gold transition-all group"
                 >
@@ -81,19 +82,19 @@ const Footer = () => {
 
               {/* Coordonnées */}
               <div className="flex flex-col gap-4">
-                <a 
-                  href="tel:+33 7 66 40 98 54"
+                <a
+                  href="tel:+33766409854"
                   className="flex items-center gap-3 font-body text-sm text-primary-foreground/50 hover:text-gold transition-all group"
                 >
                   <Phone size={18} className="group-hover:scale-110 transition-transform" />
                   +33 7 66 40 98 54
                 </a>
-                <a 
-                  href="mailto:contact@oenoros.com"
+                <a
+                  href="mailto:contact@oenoros.fr"
                   className="flex items-center gap-3 font-body text-sm text-primary-foreground/50 hover:text-gold transition-all group"
                 >
                   <Mail size={18} className="group-hover:scale-110 transition-transform" />
-                  contact@oenoros.com
+                  contact@oenoros.fr
                 </a>
                 <span className="flex items-center gap-3 font-body text-sm text-primary-foreground/50">
                   <MapPin size={18} />
@@ -106,10 +107,28 @@ const Footer = () => {
         </div>
 
         {/* ─── LIGNE DE BAS ─── */}
-        <div className="mt-20 pt-8 border-t border-primary-foreground/10 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="mt-20 pt-8 border-t border-primary-foreground/10 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="font-body text-[11px] text-primary-foreground/30 tracking-widest uppercase">
             © {new Date().getFullYear()} Oenoros. Tous droits réservés.
           </p>
+
+          {/* ─── LIENS LÉGAUX ─── */}
+          <div className="flex items-center gap-6">
+            <Link
+              to="/mentions-legales"
+              className="font-body text-[11px] text-primary-foreground/30 hover:text-gold/70 transition-colors duration-300 tracking-[0.15em] uppercase"
+            >
+              Mentions légales
+            </Link>
+            <span className="w-px h-3 bg-primary-foreground/10" />
+            <Link
+              to="/politique-confidentialite"
+              className="font-body text-[11px] text-primary-foreground/30 hover:text-gold/70 transition-colors duration-300 tracking-[0.15em] uppercase"
+            >
+              Confidentialité
+            </Link>
+          </div>
+
           <p className="font-body text-[11px] text-primary-foreground/30 tracking-widest uppercase">
             Agence de marketing viticole — Dijon
           </p>
