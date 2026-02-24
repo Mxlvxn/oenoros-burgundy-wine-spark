@@ -12,3 +12,6 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+# Sitemap pour améliorer l'indexation
+Sitemap: https://www.oenoros.com/sitemap.xml
