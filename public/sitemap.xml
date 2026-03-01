@@ -36,6 +36,22 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Blog / Actualités (haute priorité pour SEO/GEO) -->
+  <url>
+    <loc>https://www.oenoros.com/actualites</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Premier article de blog -->
+  <url>
+    <loc>https://www.oenoros.com/actualites/bienvenue-sur-notre-blog</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
   <!-- Mentions légales -->
   <url>
     <loc>https://www.oenoros.com/mentions-legales</loc>
