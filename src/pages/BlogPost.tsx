@@ -120,7 +120,17 @@ const BlogPost = () => {
                   prose-strong:text-foreground prose-strong:font-semibold
                   prose-ul:my-6 prose-li:my-2
                   prose-blockquote:border-l-4 prose-blockquote:border-gold prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-muted-foreground"
-                dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br />') }}
+                dangerouslySetInnerHTML={{ __html: post.content
+  .replace(/### (.*)/g, '<h3>$1</h3>')
+  .replace(/## (.*)/g, '<h2>$1</h2>')
+  .replace(/# (.*)/g, '<h1>$1</h1>')
+  .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+  .replace(/\*(.*?)\*/g, '<em>$1</em>')
+  .replace(/\n\n/g, '</p><p>')
+  .replace(/\n/g, '<br />')
+  .replace(/^(.)/g, '<p>$1')
+  .replace(/(.)$/g, '$1</p>')
+}}
               />
             </AnimatedSection>
 
