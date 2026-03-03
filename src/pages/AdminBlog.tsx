@@ -14,7 +14,7 @@ import { fr } from 'date-fns/locale';
 const ADMIN_USERS = [
   {
     username: 'melvyn',
-    password: 'Oenoros2026!', // Change ce mot de passe !
+    password: 'Oenoros2026!', // TODO: Change ce mot de passe !
     name: 'Melvyn GUEPET'
   },
   // Ajoute d'autres utilisateurs ici si besoin :
