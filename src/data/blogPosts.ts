@@ -2,6 +2,27 @@ import { BlogPost } from '@/types/blog';
 
 export const blogPosts: BlogPost[] = [
   {
+    id: '1772544631126',
+    slug: 'testing',
+    title: 'Testing',
+    excerpt: 'Testing',
+    content: `Testing plus long`,
+    coverImage: '/placeholder.svg',
+    category: 'strategie',
+    author: {
+      name: 'L'équipe Oenoros',
+      role: 'Agence de communication viticole',
+    },
+    publishedAt: '2026-03-03',
+    readTime: 5,
+    tags: ['marketing'],
+    seo: {
+      metaTitle: 'Testing',
+      metaDescription: 'Testing',
+      keywords: ['mot1'],
+    },
+  },
+  {
     id: '1',
     slug: 'bienvenue-sur-notre-blog',
     title: 'Bienvenue dans l\'univers Oenoros',
