@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Save, Eye, Loader2 } from 'lucide-react';
+import { ArrowLeft, Save, Eye, Loader2, Upload } from 'lucide-react';
 import { getPostBySlug } from '@/data/blogPosts';
 import { BLOG_CATEGORIES } from '@/types/blog';
 
 const AdminEditor = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const editSlug = searchParams.get('edit'); // Si on modifie un article existant
+  const editSlug = searchParams.get('edit');
   
   // États du formulaire
   const [title, setTitle] = useState('');
@@ -23,8 +23,9 @@ const AdminEditor = () => {
   
   // États UI
   const [previewMode, setPreviewMode] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [savedData, setSavedData] = useState<string | null>(null);
+  const [isPublishing, setIsPublishing] = useState(false);
+  const [publishSuccess, setPublishSuccess] = useState(false);
+  const [publishError, setPublishError] = useState('');
 
   // Vérifier l'authentification
   useEffect(() => {
@@ -52,12 +53,9 @@ const AdminEditor = () => {
     }
   }, [editSlug]);
 
-  // Fonction pour sauvegarder et générer le code
-  const handleSave = () => {
-    setIsSaving(true);
-    
-    // Générer un slug depuis le titre
-    const slug = title
+  // Fonction pour générer un slug
+  const generateSlug = (titleText: string): string => {
+    return titleText
       .toLowerCase()
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
@@ -65,52 +63,88 @@ const AdminEditor = () => {
       .trim()
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-');
-    
-    // Générer le code de l'article prêt à copier
-    const articleCode = `  {
-    id: 'CHANGE_MOI', // ← Change par un chiffre (2, 3, 4...)
-    slug: '${slug}',
-    title: '${title.replace(/'/g, "\\'")}',
-    excerpt: '${excerpt.replace(/'/g, "\\'")}',
-    content: \`${content}\`,
-    coverImage: '/placeholder.svg', // ← Change par ton image
-    category: '${category}',
-    author: {
-      name: 'L\\'équipe Oenoros',
-      role: 'Agence de communication viticole',
-    },
-    publishedAt: '${new Date().toISOString().split('T')[0]}',
-    readTime: ${readTime},
-    tags: [${tags.split(',').map(t => `'${t.trim()}'`).join(', ')}],
-    seo: {
-      metaTitle: '${metaTitle.replace(/'/g, "\\'")}',
-      metaDescription: '${metaDescription.replace(/'/g, "\\'")}',
-      keywords: [${keywords.split(',').map(k => `'${k.trim()}'`).join(', ')}],
-    },
-  },`;
-
-    setSavedData(articleCode);
-
-    setTimeout(() => {
-      setIsSaving(false);
-      alert('✅ Code généré ! Copie-le et colle-le dans blogPosts.ts');
-    }, 500);
   };
-    // Sauvegarder dans localStorage
-    localStorage.setItem('oenoros_draft_article', JSON.stringify(articleData));
-    setSavedData(JSON.stringify(articleData, null, 2));
 
-    setTimeout(() => {
-      setIsSaving(false);
-      alert('✅ Article sauvegardé localement ! (Partie 3 pour publier sur GitHub)');
-    }, 500);
+  // Fonction pour générer un ID unique
+  const generateId = (): string => {
+    const timestamp = Date.now();
+    return timestamp.toString();
+  };
+
+  // Fonction de publication sur GitHub
+  const handlePublish = async () => {
+    // Validation
+    if (!title || !excerpt || !content) {
+      alert('❌ Remplis au minimum le titre, l\'extrait et le contenu !');
+      return;
+    }
+
+    setIsPublishing(true);
+    setPublishError('');
+    setPublishSuccess(false);
+
+    try {
+      const slug = generateSlug(title);
+      const articleId = generateId();
+      
+      // Créer l'objet article
+      const newArticle = {
+        id: articleId,
+        slug,
+        title: title.replace(/'/g, "\\'"),
+        excerpt: excerpt.replace(/'/g, "\\'"),
+        content: content.replace(/`/g, '\\`'),
+        coverImage: '/placeholder.svg',
+        category,
+        author: {
+          name: "L'équipe Oenoros",
+          role: 'Agence de communication viticole',
+        },
+        publishedAt: new Date().toISOString().split('T')[0],
+        readTime,
+        tags: tags.split(',').map(t => t.trim()).filter(Boolean),
+        seo: {
+          metaTitle: metaTitle || title,
+          metaDescription: metaDescription || excerpt,
+          keywords: keywords.split(',').map(k => k.trim()).filter(Boolean),
+        },
+      };
+
+      // Appeler l'API Vercel pour publier
+      const response = await fetch('/api/publish-article', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newArticle),
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de la publication');
+      }
+
+      const result = await response.json();
+      
+      setPublishSuccess(true);
+      alert('✅ Article publié ! Il sera en ligne dans 2-3 minutes.');
+      
+      // Rediriger vers la liste après 2 secondes
+      setTimeout(() => {
+        navigate('/admin');
+      }, 2000);
+
+    } catch (error) {
+      console.error('Erreur publication:', error);
+      setPublishError('Erreur lors de la publication. Vérifie la configuration GitHub.');
+    } finally {
+      setIsPublishing(false);
+    }
   };
 
   // Rendu de la prévisualisation
   const renderPreview = () => {
     return (
       <div className="max-w-3xl mx-auto p-8">
-        {/* Badge catégorie */}
         <span 
           className="inline-block px-4 py-2 rounded-full text-xs uppercase tracking-wider font-body font-medium text-white mb-6"
           style={{ backgroundColor: BLOG_CATEGORIES[category].color }}
@@ -118,20 +152,16 @@ const AdminEditor = () => {
           {BLOG_CATEGORIES[category].label}
         </span>
 
-        {/* Titre */}
         <h1 className="font-display text-4xl md:text-5xl text-foreground leading-[1.1] mb-6">
           {title || 'Titre de l\'article'}
         </h1>
 
-        {/* Excerpt */}
         <p className="font-body text-lg text-muted-foreground mb-8 leading-relaxed">
           {excerpt || 'Extrait de l\'article...'}
         </p>
 
-        {/* Contenu */}
         <div className="prose prose-lg max-w-none font-body text-foreground/90 leading-relaxed">
           {content.split('\n\n').map((paragraph, index) => {
-            // Gestion des titres
             if (paragraph.startsWith('### ')) {
               return <h3 key={index} className="text-2xl font-display mt-8 mb-3">{paragraph.replace('### ', '')}</h3>;
             }
@@ -142,7 +172,6 @@ const AdminEditor = () => {
               return <h1 key={index} className="text-4xl font-display mt-12 mb-6">{paragraph.replace('# ', '')}</h1>;
             }
             
-            // Gestion du gras et italique
             let formattedText = paragraph;
             formattedText = formattedText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
             formattedText = formattedText.replace(/\*(.*?)\*/g, '<em>$1</em>');
@@ -157,7 +186,6 @@ const AdminEditor = () => {
           })}
         </div>
 
-        {/* Tags */}
         {tags && (
           <div className="mt-12 pt-8 border-t border-border">
             <div className="flex flex-wrap gap-2">
@@ -208,19 +236,19 @@ const AdminEditor = () => {
               </button>
 
               <button
-                onClick={handleSave}
-                disabled={isSaving}
-                className="flex items-center gap-2 px-6 py-2 bg-gold hover:bg-gold-light text-wine-dark rounded-lg font-body text-sm transition-colors disabled:opacity-50"
+                onClick={handlePublish}
+                disabled={isPublishing}
+                className="flex items-center gap-2 px-6 py-2 bg-gold hover:bg-gold-light text-wine-dark rounded-lg font-body text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSaving ? (
+                {isPublishing ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    Sauvegarde...
+                    Publication...
                   </>
                 ) : (
                   <>
-                    <Save className="w-4 h-4" />
-                    Sauvegarder
+                    <Upload className="w-4 h-4" />
+                    Publier
                   </>
                 )}
               </button>
@@ -229,10 +257,26 @@ const AdminEditor = () => {
         </div>
       </header>
 
+      {/* Messages de succès/erreur */}
+      {publishSuccess && (
+        <div className="bg-green-50 border-b border-green-200 px-6 py-3">
+          <p className="font-body text-sm text-green-800 text-center">
+            ✅ Article publié avec succès ! Redirection...
+          </p>
+        </div>
+      )}
+
+      {publishError && (
+        <div className="bg-red-50 border-b border-red-200 px-6 py-3">
+          <p className="font-body text-sm text-red-800 text-center">
+            ❌ {publishError}
+          </p>
+        </div>
+      )}
+
       {/* Contenu principal */}
       <main className="container mx-auto px-6 py-12">
         {previewMode ? (
-          // MODE PRÉVISUALISATION
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -241,9 +285,8 @@ const AdminEditor = () => {
             {renderPreview()}
           </motion.div>
         ) : (
-          // MODE ÉDITION
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Colonne principale - Éditeur */}
+            {/* Colonne principale */}
             <div className="lg:col-span-2 space-y-6">
               {/* Titre */}
               <div className="bg-white rounded-2xl p-6 shadow-sm">
@@ -272,34 +315,34 @@ const AdminEditor = () => {
                   className="w-full px-4 py-3 rounded-xl border border-border focus:border-primary focus:outline-none font-body resize-none"
                 />
                 <p className="text-xs text-muted-foreground mt-2">
-                  {excerpt.length} caractères (recommandé : 100-200)
+                  {excerpt.length} caractères
                 </p>
               </div>
 
-              {/* Contenu principal */}
+              {/* Contenu */}
               <div className="bg-white rounded-2xl p-6 shadow-sm">
                 <label className="font-body text-sm font-medium text-foreground mb-2 block">
                   Contenu de l'article *
                 </label>
                 <div className="bg-cream/30 rounded-lg p-4 mb-3">
                   <p className="font-body text-xs text-muted-foreground">
-                    <strong>Syntaxe Markdown :</strong> # Grand titre • ## Sous-titre • ### Petit titre • **gras** • *italique*
+                    <strong>Syntaxe :</strong> # Grand titre • ## Sous-titre • **gras** • *italique*
                   </p>
                 </div>
                 <textarea
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
-                  placeholder="# Titre principal&#10;&#10;Votre contenu ici...&#10;&#10;## Sous-titre&#10;&#10;Plus de contenu..."
+                  placeholder="# Titre principal&#10;&#10;Votre contenu ici..."
                   rows={20}
                   className="w-full px-4 py-3 rounded-xl border border-border focus:border-primary focus:outline-none font-body font-mono text-sm resize-none"
                 />
                 <p className="text-xs text-muted-foreground mt-2">
-                  {content.split(' ').length} mots • ~{Math.ceil(content.split(' ').length / 200)} min de lecture
+                  {content.split(' ').filter(Boolean).length} mots
                 </p>
               </div>
             </div>
 
-            {/* Colonne latérale - Métadonnées */}
+            {/* Colonne latérale */}
             <div className="lg:col-span-1 space-y-6">
               {/* Catégorie */}
               <div className="bg-white rounded-2xl p-6 shadow-sm">
@@ -346,7 +389,7 @@ const AdminEditor = () => {
               {/* Temps de lecture */}
               <div className="bg-white rounded-2xl p-6 shadow-sm">
                 <label className="font-body text-sm font-medium text-foreground mb-2 block">
-                  Temps de lecture (minutes)
+                  Temps de lecture (min)
                 </label>
                 <input
                   type="number"
@@ -413,28 +456,7 @@ const AdminEditor = () => {
                   </div>
                 </div>
               </div>
-
-              {/* Info Partie 3 */}
-              <div className="bg-gold/10 border border-gold/30 rounded-2xl p-6">
-                <p className="font-body text-xs text-foreground leading-relaxed">
-                  💡 <strong>Partie 2 active :</strong> Tu peux écrire et prévisualiser ton article. La sauvegarde est locale (dans ton navigateur).
-                  <br /><br />
-                  <strong>Partie 3 à venir :</strong> Publication automatique sur GitHub !
-                </p>
-              </div>
             </div>
-          </div>
-        )}
-
-        {/* Debug : Afficher les données sauvegardées */}
-        {savedData && (
-          <div className="mt-8 bg-white rounded-2xl p-6 shadow-sm">
-            <h3 className="font-body text-sm font-medium text-foreground mb-3">
-              📦 Données sauvegardées (copie ça pour la Partie 3)
-            </h3>
-            <pre className="bg-cream rounded-lg p-4 overflow-auto text-xs font-mono">
-              {savedData}
-            </pre>
           </div>
         )}
       </main>
