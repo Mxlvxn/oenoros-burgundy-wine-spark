@@ -52,25 +52,50 @@ const AdminEditor = () => {
     }
   }, [editSlug]);
 
-  // Fonction pour sauvegarder localement (dans le navigateur)
+  // Fonction pour sauvegarder et générer le code
   const handleSave = () => {
     setIsSaving(true);
     
-    const articleData = {
-      title,
-      excerpt,
-      content,
-      category,
-      tags: tags.split(',').map(t => t.trim()),
-      readTime,
-      seo: {
-        metaTitle,
-        metaDescription,
-        keywords: keywords.split(',').map(k => k.trim()),
-      },
-      savedAt: new Date().toISOString(),
-    };
+    // Générer un slug depuis le titre
+    const slug = title
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-');
+    
+    // Générer le code de l'article prêt à copier
+    const articleCode = `  {
+    id: 'CHANGE_MOI', // ← Change par un chiffre (2, 3, 4...)
+    slug: '${slug}',
+    title: '${title.replace(/'/g, "\\'")}',
+    excerpt: '${excerpt.replace(/'/g, "\\'")}',
+    content: \`${content}\`,
+    coverImage: '/placeholder.svg', // ← Change par ton image
+    category: '${category}',
+    author: {
+      name: 'L\\'équipe Oenoros',
+      role: 'Agence de communication viticole',
+    },
+    publishedAt: '${new Date().toISOString().split('T')[0]}',
+    readTime: ${readTime},
+    tags: [${tags.split(',').map(t => `'${t.trim()}'`).join(', ')}],
+    seo: {
+      metaTitle: '${metaTitle.replace(/'/g, "\\'")}',
+      metaDescription: '${metaDescription.replace(/'/g, "\\'")}',
+      keywords: [${keywords.split(',').map(k => `'${k.trim()}'`).join(', ')}],
+    },
+  },`;
 
+    setSavedData(articleCode);
+
+    setTimeout(() => {
+      setIsSaving(false);
+      alert('✅ Code généré ! Copie-le et colle-le dans blogPosts.ts');
+    }, 500);
+  };
     // Sauvegarder dans localStorage
     localStorage.setItem('oenoros_draft_article', JSON.stringify(articleData));
     setSavedData(JSON.stringify(articleData, null, 2));
