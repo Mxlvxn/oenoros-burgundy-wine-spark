@@ -1,12 +1,28 @@
 const blogPosts = [
   {
-    title: "The Art of Wine Making",
-    content: "In winemaking, the process starts with grapes. The fermentation process creates alcohol, and it's essential to manage it carefully to produce high-quality wine.\"",
+    slug: "bienvenue-oenoros",
+    title: "Bienvenue dans l'univers Oenoros",
+    content: "Salut à tous ! Découvrez notre vin...",
+    category: "Introduction",
   },
-  {
-    title: "Understanding Burgundy Wine",
-    content: "Burgundy wine is unique. It's often referred to as 'the wine of kings.' People appreciate its rich flavor and aroma.\"",
-  },
+  // Other blog posts
 ];
 
-export default blogPosts;
+function getAllPosts() {
+  return blogPosts;
+}
+
+function getPostBySlug(slug) {
+  return blogPosts.find(post => post.slug === slug);
+}
+
+function getPostsByCategory(category) {
+  return blogPosts.filter(post => post.category === category);
+}
+
+function getRecentPosts(limit = 5) {
+  // For simplicity, return the first `limit` posts
+  return blogPosts.slice(0, limit);
+}
+
+export { getAllPosts, getPostBySlug, getPostsByCategory, getRecentPosts };
