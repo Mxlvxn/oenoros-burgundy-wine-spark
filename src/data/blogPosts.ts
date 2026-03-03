@@ -10,7 +10,7 @@ export const blogPosts: BlogPost[] = [
     coverImage: '/placeholder.svg',
     category: 'strategie',
     author: {
-      name: 'L'�quipe Oenoros',
+      name: "L'équipe Oenoros",
       role: 'Agence de communication viticole',
     },
     publishedAt: '2026-03-03',
@@ -25,7 +25,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: '1',
     slug: 'bienvenue-sur-notre-blog',
-    title: 'Bienvenue dans l\'univers Oenoros',
+    title: 'Bienvenue dans l'univers Oenoros',
     excerpt: 'Découvrez notre nouvelle section Actualités où nous partagerons notre expertise, nos insights et les dernières tendances du marketing viticole en Bourgogne.',
     content: `# Bienvenue dans l'univers Oenoros
 
@@ -51,11 +51,11 @@ Chaque article publié ici reflète notre engagement : vous apporter une experti
 
 **L'ordinaire n'a pas sa place ici. Votre image non plus.**
 
-*— L'équipe Oenoros*`,
+*– L'équipe Oenoros*`,
     coverImage: '/placeholder.svg',
     category: 'actualites',
     author: {
-      name: 'L\'équipe Oenoros',
+      name: "L'équipe Oenoros",
       role: 'Agence de communication viticole',
     },
     publishedAt: '2026-03-01',
