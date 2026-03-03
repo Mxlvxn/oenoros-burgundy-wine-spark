@@ -1,14 +1,12 @@
-// Updated blog posts with fixed apostrophes
-
 const blogPosts = [
-    {
-        title: "A Guide to Burgundy's Best Wines",
-        content: "Burgundy's wines are renowned for their quality, especially the Pinot Noir and Chardonnay varieties."
-    },
-    {
-        title: "Exploring Burgundy's Vineyards",
-        content: "Have you ever wanted to explore the vineyards in Burgundy? They're stunning!"
-    }
+  {
+    title: "The Art of Wine Making",
+    content: "In winemaking, the process starts with grapes. The fermentation process creates alcohol, and it's essential to manage it carefully to produce high-quality wine.\"",
+  },
+  {
+    title: "Understanding Burgundy Wine",
+    content: "Burgundy wine is unique. It's often referred to as 'the wine of kings.' People appreciate its rich flavor and aroma.\"",
+  },
 ];
 
 export default blogPosts;
