@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Lock, LogOut, Edit, Trash2, Plus } from 'lucide-react';
 import { getAllPosts } from '@/data/blogPosts';
@@ -14,7 +15,7 @@ import { fr } from 'date-fns/locale';
 const ADMIN_USERS = [
   {
     username: 'melvyn',
-    password: 'Oenoros2026!', // TODO: Change ce mot de passe !
+    password: 'Oenoros2026!', // Change ce mot de passe !
     name: 'Melvyn GUEPET'
   },
   // Ajoute d'autres utilisateurs ici si besoin :
@@ -26,6 +27,7 @@ const ADMIN_USERS = [
 ];
 
 const AdminBlog = () => {
+  const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -69,6 +71,11 @@ const AdminBlog = () => {
     setUsername('');
     setPassword('');
     sessionStorage.removeItem('oenoros_admin_user');
+  };
+
+  // Fonction pour créer un nouvel article
+  const handleNewArticle = () => {
+    navigate('/admin/editor');
   };
 
   // ============================================
@@ -171,14 +178,13 @@ const AdminBlog = () => {
             </div>
             
             <div className="flex items-center gap-4">
-              {/* Bouton Nouvel Article (pas encore fonctionnel) */}
+              {/* Bouton Nouvel Article - ACTIF ! */}
               <button
-                disabled
-                className="flex items-center gap-2 px-6 py-2.5 bg-cream text-muted-foreground rounded-full font-body text-sm cursor-not-allowed opacity-50"
+                onClick={handleNewArticle}
+                className="flex items-center gap-2 px-6 py-2.5 bg-gold hover:bg-gold-light text-wine-dark rounded-full font-body text-sm transition-colors"
               >
                 <Plus className="w-4 h-4" />
                 Nouvel article
-                <span className="text-xs">(Partie 2)</span>
               </button>
 
               {/* Bouton Déconnexion */}
@@ -269,7 +275,7 @@ const AdminBlog = () => {
                         <button
                           disabled
                           className="p-2 hover:bg-cream rounded-lg transition-colors cursor-not-allowed opacity-50"
-                          title="Modifier (Partie 2)"
+                          title="Modifier (Partie 3)"
                         >
                           <Edit className="w-4 h-4 text-muted-foreground" />
                         </button>
@@ -298,7 +304,7 @@ const AdminBlog = () => {
           </h3>
           <div className="font-body text-sm text-muted-foreground space-y-1">
             <p>✅ <strong>Partie 1 terminée :</strong> Connexion + Liste des articles</p>
-            <p>⏳ <strong>Partie 2 à venir :</strong> Éditeur pour créer/modifier des articles</p>
+            <p>✅ <strong>Partie 2 terminée :</strong> Éditeur visuel pour créer des articles</p>
             <p>⏳ <strong>Partie 3 à venir :</strong> Publication automatique sur GitHub</p>
             <p>⏳ <strong>Partie 4 à venir :</strong> Upload d'images + Suppression</p>
           </div>
