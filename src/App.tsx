@@ -15,6 +15,7 @@ import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import AdminBlog from "./pages/AdminBlog";
+import AdminEditor from "./pages/AdminEditor";
 import MentionsLegales from "./pages/MentionsLegales";
 import PolitiqueConfidentialite from "./pages/PolitiqueConfidentialite";
 import NotFound from "./pages/NotFound";
@@ -39,8 +40,9 @@ const App = () => (
             <Route path="/mentions-legales" element={<MentionsLegales />} />
             <Route path="/politique-confidentialite" element={<PolitiqueConfidentialite />} />
           </Route>
-          {/* Route Admin isolée (sans header/footer) */}
+          {/* Routes Admin isolées (sans header/footer) */}
           <Route path="/admin" element={<AdminBlog />} />
+          <Route path="/admin/editor" element={<AdminEditor />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
