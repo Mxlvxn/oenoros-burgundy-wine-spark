@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Save, Eye, Loader2, Upload } from 'lucide-react';
-import { getPostBySlug } from '@/data/blogPosts';
+import { ArrowLeft, Eye, Loader2, Upload, Image as ImageIcon, X } from 'lucide-react';
+import { getAllPosts } from '@/data/blogPosts';
 import { BLOG_CATEGORIES } from '@/types/blog';
 
 const AdminEditor = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const editSlug = searchParams.get('edit');
+  const editId = searchParams.get('edit'); // ID de l'article à éditer
   
   // États du formulaire
+  const [articleId, setArticleId] = useState('');
   const [title, setTitle] = useState('');
   const [excerpt, setExcerpt] = useState('');
   const [content, setContent] = useState('');
@@ -20,12 +21,14 @@ const AdminEditor = () => {
   const [metaTitle, setMetaTitle] = useState('');
   const [metaDescription, setMetaDescription] = useState('');
   const [keywords, setKeywords] = useState('');
+  const [coverImage, setCoverImage] = useState('/placeholder.svg');
   
   // États UI
   const [previewMode, setPreviewMode] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const [publishSuccess, setPublishSuccess] = useState(false);
   const [publishError, setPublishError] = useState('');
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   // Vérifier l'authentification
   useEffect(() => {
@@ -37,9 +40,12 @@ const AdminEditor = () => {
 
   // Charger l'article si on est en mode édition
   useEffect(() => {
-    if (editSlug) {
-      const post = getPostBySlug(editSlug);
+    if (editId) {
+      const allPosts = getAllPosts();
+      const post = allPosts.find(p => p.id === editId);
+      
       if (post) {
+        setArticleId(post.id);
         setTitle(post.title);
         setExcerpt(post.excerpt);
         setContent(post.content);
@@ -49,9 +55,10 @@ const AdminEditor = () => {
         setMetaTitle(post.seo.metaTitle);
         setMetaDescription(post.seo.metaDescription);
         setKeywords(post.seo.keywords.join(', '));
+        setCoverImage(post.coverImage);
       }
     }
-  }, [editSlug]);
+  }, [editId]);
 
   // Fonction pour générer un slug
   const generateSlug = (titleText: string): string => {
@@ -65,15 +72,64 @@ const AdminEditor = () => {
       .replace(/-+/g, '-');
   };
 
-  // Fonction pour générer un ID unique
-  const generateId = (): string => {
-    const timestamp = Date.now();
-    return timestamp.toString();
+  // Fonction pour uploader une image
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Vérifier que c'est une image
+    if (!file.type.startsWith('image/')) {
+      alert('❌ Seulement des images (JPG, PNG, WebP)');
+      return;
+    }
+
+    // Vérifier la taille (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('❌ Image trop lourde (max 5MB)');
+      return;
+    }
+
+    setUploadingImage(true);
+
+    try {
+      // Convertir en base64
+      const reader = new FileReader();
+      reader.onload = async (event) => {
+        const base64 = event.target?.result as string;
+        
+        // Créer un nom de fichier unique
+        const fileName = `blog-${Date.now()}.${file.type.split('/')[1]}`;
+        
+        // Uploader sur GitHub
+        const response = await fetch('/api/upload-image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            fileName,
+            fileContent: base64.split(',')[1], // Enlever le préfixe data:image/...
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Erreur upload');
+        }
+
+        const result = await response.json();
+        setCoverImage(result.path); // Ex: /blog/blog-123456.jpg
+        alert('✅ Image uploadée !');
+      };
+
+      reader.readAsDataURL(file);
+    } catch (error) {
+      console.error(error);
+      alert('❌ Erreur lors de l\'upload');
+    } finally {
+      setUploadingImage(false);
+    }
   };
 
-  // Fonction de publication sur GitHub
+  // Fonction de publication/mise à jour
   const handlePublish = async () => {
-    // Validation
     if (!title || !excerpt || !content) {
       alert('❌ Remplis au minimum le titre, l\'extrait et le contenu !');
       return;
@@ -85,16 +141,15 @@ const AdminEditor = () => {
 
     try {
       const slug = generateSlug(title);
-      const articleId = generateId();
+      const isEditing = !!editId;
       
-      // Créer l'objet article
-      const newArticle = {
-        id: articleId,
+      const articleData = {
+        id: articleId || Date.now().toString(),
         slug,
-        title: title.replace(/'/g, "\\'"),
-        excerpt: excerpt.replace(/'/g, "\\'"),
-        content: content.replace(/`/g, '\\`'),
-        coverImage: '/placeholder.svg',
+        title,
+        excerpt,
+        content,
+        coverImage,
         category,
         author: {
           name: "L'équipe Oenoros",
@@ -110,32 +165,37 @@ const AdminEditor = () => {
         },
       };
 
-      // Appeler l'API Vercel pour publier
-      const response = await fetch('/api/publish-article', {
+      // Appeler l'API appropriée
+      const endpoint = isEditing ? '/api/update-article' : '/api/publish-article';
+      const body = isEditing 
+        ? { articleId, updates: articleData }
+        : articleData;
+
+      const response = await fetch(endpoint, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newArticle),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
       });
 
       if (!response.ok) {
         throw new Error('Erreur lors de la publication');
       }
 
-      const result = await response.json();
-      
       setPublishSuccess(true);
-      alert('✅ Article publié ! Il sera en ligne dans 2-3 minutes.');
       
-      // Rediriger vers la liste après 2 secondes
+      const msg = isEditing 
+        ? '✅ Article modifié ! Visible dans 2-3 min sur le site.'
+        : '✅ Article publié ! Visible dans 2-3 min sur le site.';
+      
+      alert(msg);
+      
       setTimeout(() => {
         navigate('/admin');
       }, 2000);
 
     } catch (error) {
-      console.error('Erreur publication:', error);
-      setPublishError('Erreur lors de la publication. Vérifie la configuration GitHub.');
+      console.error('Erreur:', error);
+      setPublishError('Erreur lors de la publication. Vérifie la configuration.');
     } finally {
       setIsPublishing(false);
     }
@@ -145,6 +205,15 @@ const AdminEditor = () => {
   const renderPreview = () => {
     return (
       <div className="max-w-3xl mx-auto p-8">
+        {/* Image de couverture */}
+        {coverImage !== '/placeholder.svg' && (
+          <img 
+            src={coverImage} 
+            alt={title}
+            className="w-full h-96 object-cover rounded-2xl mb-8"
+          />
+        )}
+
         <span 
           className="inline-block px-4 py-2 rounded-full text-xs uppercase tracking-wider font-body font-medium text-white mb-6"
           style={{ backgroundColor: BLOG_CATEGORIES[category].color }}
@@ -219,7 +288,7 @@ const AdminEditor = () => {
             </button>
 
             <h1 className="font-display text-xl text-foreground">
-              {editSlug ? 'Modifier l\'article' : 'Nouvel article'}
+              {editId ? 'Modifier l\'article' : 'Nouvel article'}
             </h1>
 
             <div className="flex items-center gap-3">
@@ -238,17 +307,17 @@ const AdminEditor = () => {
               <button
                 onClick={handlePublish}
                 disabled={isPublishing}
-                className="flex items-center gap-2 px-6 py-2 bg-gold hover:bg-gold-light text-wine-dark rounded-lg font-body text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 px-6 py-2 bg-gold hover:bg-gold-light text-wine-dark rounded-lg font-body text-sm transition-colors disabled:opacity-50"
               >
                 {isPublishing ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    Publication...
+                    {editId ? 'Mise à jour...' : 'Publication...'}
                   </>
                 ) : (
                   <>
                     <Upload className="w-4 h-4" />
-                    Publier
+                    {editId ? 'Mettre à jour' : 'Publier'}
                   </>
                 )}
               </button>
@@ -257,11 +326,11 @@ const AdminEditor = () => {
         </div>
       </header>
 
-      {/* Messages de succès/erreur */}
+      {/* Messages */}
       {publishSuccess && (
         <div className="bg-green-50 border-b border-green-200 px-6 py-3">
           <p className="font-body text-sm text-green-800 text-center">
-            ✅ Article publié avec succès ! Redirection...
+            ✅ {editId ? 'Article modifié !' : 'Article publié !'} Redirection...
           </p>
         </div>
       )}
@@ -288,6 +357,52 @@ const AdminEditor = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Colonne principale */}
             <div className="lg:col-span-2 space-y-6">
+              {/* Image de couverture */}
+              <div className="bg-white rounded-2xl p-6 shadow-sm">
+                <label className="font-body text-sm font-medium text-foreground mb-2 block">
+                  Image de couverture
+                </label>
+                
+                {coverImage !== '/placeholder.svg' ? (
+                  <div className="relative">
+                    <img 
+                      src={coverImage} 
+                      alt="Couverture"
+                      className="w-full h-64 object-cover rounded-xl"
+                    />
+                    <button
+                      onClick={() => setCoverImage('/placeholder.svg')}
+                      className="absolute top-2 right-2 p-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed border-border rounded-xl cursor-pointer hover:border-primary transition-colors">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="hidden"
+                      disabled={uploadingImage}
+                    />
+                    {uploadingImage ? (
+                      <Loader2 className="w-12 h-12 text-primary animate-spin" />
+                    ) : (
+                      <>
+                        <ImageIcon className="w-12 h-12 text-muted-foreground mb-2" />
+                        <p className="font-body text-sm text-muted-foreground">
+                          Clique pour uploader une image
+                        </p>
+                        <p className="font-body text-xs text-muted-foreground mt-1">
+                          JPG, PNG, WebP - Max 5MB
+                        </p>
+                      </>
+                    )}
+                  </label>
+                )}
+              </div>
+
               {/* Titre */}
               <div className="bg-white rounded-2xl p-6 shadow-sm">
                 <label className="font-body text-sm font-medium text-foreground mb-2 block">
