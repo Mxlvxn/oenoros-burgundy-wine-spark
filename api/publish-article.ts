@@ -26,7 +26,6 @@ export default async function handler(
   req: VercelRequest,
   res: VercelResponse
 ) {
-  // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -42,12 +41,10 @@ export default async function handler(
   try {
     const articleData = req.body as ArticleData;
 
-    // Validation
     if (!articleData.title || !articleData.content) {
       return res.status(400).json({ error: 'Titre et contenu requis' });
     }
 
-    // Configuration GitHub
     const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
     const GITHUB_OWNER = 'Mxlvxn';
     const GITHUB_REPO = 'oenoros-burgundy-wine-spark';
@@ -77,7 +74,7 @@ export default async function handler(
     const fileData: any = await getResponse.json();
     const currentContent = Buffer.from(fileData.content, 'base64').toString('utf-8');
 
-    // 2. Générer le code du nouvel article
+    // 2. Générer le code du nouvel article (AVEC ÉCHAPPEMENT CORRECT)
     const articleCode = `  {
     id: '${articleData.id}',
     slug: '${articleData.slug}',
@@ -87,20 +84,20 @@ export default async function handler(
     coverImage: '${articleData.coverImage}',
     category: '${articleData.category}',
     author: {
-      name: '${articleData.author.name}',
-      role: '${articleData.author.role}',
+      name: '${articleData.author.name.replace(/'/g, "\\'")}',
+      role: '${articleData.author.role.replace(/'/g, "\\'")}',
     },
     publishedAt: '${articleData.publishedAt}',
     readTime: ${articleData.readTime},
-    tags: [${articleData.tags.map(t => `'${t}'`).join(', ')}],
+    tags: [${articleData.tags.map(t => `'${t.replace(/'/g, "\\'")}'`).join(', ')}],
     seo: {
       metaTitle: '${articleData.seo.metaTitle.replace(/'/g, "\\'")}',
       metaDescription: '${articleData.seo.metaDescription.replace(/'/g, "\\'")}',
-      keywords: [${articleData.seo.keywords.map(k => `'${k}'`).join(', ')}],
+      keywords: [${articleData.seo.keywords.map(k => `'${k.replace(/'/g, "\\'")}'`).join(', ')}],
     },
   },`;
 
-    // 3. Insérer l'article après "export const blogPosts: BlogPost[] = ["
+    // 3. Insérer l'article
     const lines = currentContent.split('\n');
     const exportIndex = lines.findIndex(line => 
       line.includes('export const blogPosts: BlogPost[] = [')
