@@ -7,23 +7,12 @@ import { BLOG_CATEGORIES } from '@/types/blog';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 
-// ============================================
-// CONFIGURATION DES ACCÈS
-// Pour ajouter/modifier/supprimer des utilisateurs,
-// modifie ce tableau directement ici.
-// ============================================
 const ADMIN_USERS = [
   {
     username: 'melvyn',
-    password: 'Oenoros2026!', // Change ce mot de passe !
+    password: 'Oenoros2026!',
     name: 'Melvyn GUEPET'
   },
-  // Ajoute d'autres utilisateurs ici si besoin :
-  // {
-  //   username: 'ton-associe',
-  //   password: 'MotDePasse123!',
-  //   name: 'Prénom Nom'
-  // },
 ];
 
 const AdminBlog = () => {
@@ -33,10 +22,10 @@ const AdminBlog = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [currentUser, setCurrentUser] = useState('');
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   
   const allPosts = getAllPosts();
 
-  // Vérifier si déjà connecté (stocké temporairement en mémoire)
   useEffect(() => {
     const stored = sessionStorage.getItem('oenoros_admin_user');
     if (stored) {
@@ -45,7 +34,6 @@ const AdminBlog = () => {
     }
   }, []);
 
-  // Fonction de connexion
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -64,7 +52,6 @@ const AdminBlog = () => {
     }
   };
 
-  // Fonction de déconnexion
   const handleLogout = () => {
     setIsAuthenticated(false);
     setCurrentUser('');
@@ -73,14 +60,47 @@ const AdminBlog = () => {
     sessionStorage.removeItem('oenoros_admin_user');
   };
 
-  // Fonction pour créer un nouvel article
   const handleNewArticle = () => {
     navigate('/admin/editor');
   };
 
-  // ============================================
-  // ÉCRAN DE CONNEXION
-  // ============================================
+  const handleEdit = (articleId: string) => {
+    navigate(`/admin/editor?edit=${articleId}`);
+  };
+
+  const handleDelete = async (articleId: string, articleTitle: string) => {
+    if (!confirm(`Supprimer l'article "${articleTitle}" ?\n\nCette action est irréversible.`)) {
+      return;
+    }
+
+    setDeletingId(articleId);
+
+    try {
+      const response = await fetch('/api/delete-article', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ articleId }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de la suppression');
+      }
+
+      alert('✅ Article supprimé ! Rafraîchis la page dans 2 min.');
+      
+      // Recharger après 2 min (le temps que Vercel redéploie)
+      setTimeout(() => {
+        window.location.reload();
+      }, 120000);
+
+    } catch (error) {
+      console.error(error);
+      alert('❌ Erreur lors de la suppression. Vérifie la configuration GitHub.');
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-wine-dark via-primary to-wine-light flex items-center justify-center p-6">
@@ -89,7 +109,6 @@ const AdminBlog = () => {
           animate={{ opacity: 1, y: 0 }}
           className="bg-white rounded-3xl shadow-2xl p-10 w-full max-w-md"
         >
-          {/* Logo/Titre */}
           <div className="text-center mb-8">
             <div className="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-4">
               <Lock className="w-8 h-8 text-wine-dark" />
@@ -102,7 +121,6 @@ const AdminBlog = () => {
             </p>
           </div>
 
-          {/* Formulaire de connexion */}
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
               <label className="font-body text-sm text-foreground mb-2 block">
@@ -150,7 +168,6 @@ const AdminBlog = () => {
             </button>
           </form>
 
-          {/* Note de sécurité */}
           <p className="font-body text-xs text-muted-foreground text-center mt-6">
             🔒 Accès réservé aux administrateurs Oenoros
           </p>
@@ -159,12 +176,8 @@ const AdminBlog = () => {
     );
   }
 
-  // ============================================
-  // PANNEAU ADMIN (après connexion)
-  // ============================================
   return (
     <div className="min-h-screen bg-background">
-      {/* Header Admin */}
       <header className="bg-white border-b border-border sticky top-0 z-50">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
@@ -173,12 +186,11 @@ const AdminBlog = () => {
                 Gestion du Blog
               </h1>
               <p className="font-body text-sm text-muted-foreground">
-                Connecté en tant que <span className="font-medium text-primary">{currentUser}</span>
+                Connecté : <span className="font-medium text-primary">{currentUser}</span>
               </p>
             </div>
             
             <div className="flex items-center gap-4">
-              {/* Bouton Nouvel Article - ACTIF ! */}
               <button
                 onClick={handleNewArticle}
                 className="flex items-center gap-2 px-6 py-2.5 bg-gold hover:bg-gold-light text-wine-dark rounded-full font-body text-sm transition-colors"
@@ -187,7 +199,6 @@ const AdminBlog = () => {
                 Nouvel article
               </button>
 
-              {/* Bouton Déconnexion */}
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-2 px-6 py-2.5 bg-primary hover:bg-wine-dark text-white rounded-full font-body text-sm transition-colors"
@@ -200,10 +211,8 @@ const AdminBlog = () => {
         </div>
       </header>
 
-      {/* Liste des articles */}
       <main className="container mx-auto px-6 py-12">
         <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
-          {/* En-tête du tableau */}
           <div className="bg-cream px-8 py-4 border-b border-border">
             <div className="grid grid-cols-12 gap-4 font-body text-sm font-medium text-muted-foreground uppercase tracking-wide">
               <div className="col-span-5">Titre</div>
@@ -214,7 +223,6 @@ const AdminBlog = () => {
             </div>
           </div>
 
-          {/* Lignes des articles */}
           <div className="divide-y divide-border">
             {allPosts.length === 0 ? (
               <div className="px-8 py-12 text-center">
@@ -235,7 +243,6 @@ const AdminBlog = () => {
                     className="px-8 py-6 hover:bg-cream/30 transition-colors"
                   >
                     <div className="grid grid-cols-12 gap-4 items-center">
-                      {/* Titre */}
                       <div className="col-span-5">
                         <h3 className="font-body font-medium text-foreground mb-1">
                           {post.title}
@@ -245,7 +252,6 @@ const AdminBlog = () => {
                         </p>
                       </div>
 
-                      {/* Catégorie */}
                       <div className="col-span-2">
                         <span
                           className="inline-block px-3 py-1 rounded-full text-xs font-body text-white"
@@ -255,38 +261,38 @@ const AdminBlog = () => {
                         </span>
                       </div>
 
-                      {/* Date */}
                       <div className="col-span-2">
                         <p className="font-body text-sm text-muted-foreground">
                           {format(new Date(post.publishedAt), 'd MMM yyyy', { locale: fr })}
                         </p>
                       </div>
 
-                      {/* Temps de lecture */}
                       <div className="col-span-1">
                         <p className="font-body text-sm text-muted-foreground">
                           {post.readTime} min
                         </p>
                       </div>
 
-                      {/* Actions */}
                       <div className="col-span-2 flex items-center justify-end gap-2">
-                        {/* Bouton Modifier (pas encore fonctionnel) */}
                         <button
-                          disabled
-                          className="p-2 hover:bg-cream rounded-lg transition-colors cursor-not-allowed opacity-50"
-                          title="Modifier (Partie 3)"
+                          onClick={() => handleEdit(post.id)}
+                          className="p-2 hover:bg-cream rounded-lg transition-colors"
+                          title="Modifier"
                         >
-                          <Edit className="w-4 h-4 text-muted-foreground" />
+                          <Edit className="w-4 h-4 text-primary" />
                         </button>
 
-                        {/* Bouton Supprimer (pas encore fonctionnel) */}
                         <button
-                          disabled
-                          className="p-2 hover:bg-red-50 rounded-lg transition-colors cursor-not-allowed opacity-50"
-                          title="Supprimer (Partie 4)"
+                          onClick={() => handleDelete(post.id, post.title)}
+                          disabled={deletingId === post.id}
+                          className="p-2 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
+                          title="Supprimer"
                         >
-                          <Trash2 className="w-4 h-4 text-red-400" />
+                          {deletingId === post.id ? (
+                            <div className="w-4 h-4 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
+                          ) : (
+                            <Trash2 className="w-4 h-4 text-red-500" />
+                          )}
                         </button>
                       </div>
                     </div>
@@ -294,19 +300,6 @@ const AdminBlog = () => {
                 );
               })
             )}
-          </div>
-        </div>
-
-        {/* Info sur les prochaines parties */}
-        <div className="mt-8 bg-gold/10 border border-gold/30 rounded-2xl p-6">
-          <h3 className="font-display text-lg text-foreground mb-3">
-            🚧 En construction
-          </h3>
-          <div className="font-body text-sm text-muted-foreground space-y-1">
-            <p>✅ <strong>Partie 1 terminée :</strong> Connexion + Liste des articles</p>
-            <p>✅ <strong>Partie 2 terminée :</strong> Éditeur visuel pour créer des articles</p>
-            <p>⏳ <strong>Partie 3 à venir :</strong> Publication automatique sur GitHub</p>
-            <p>⏳ <strong>Partie 4 à venir :</strong> Upload d'images + Suppression</p>
           </div>
         </div>
       </main>
