@@ -3,7 +3,7 @@ import { BlogPost } from '@/types/blog';
 export const blogPosts: BlogPost[] = [
   {
     id: '1',
-    slug: 'bienvenue-sur-notre-blog',
+    slug: 'bienvenue-dans-lunivers-oenoros',
     title: 'Bienvenue dans l\'univers Oenoros',
     excerpt: 'Découvrez notre vision du marketing viticole moderne et comment nous aidons les domaines à rayonner.',
     content: `# Bienvenue dans l'univers Oenoros
@@ -24,13 +24,13 @@ Sur ce blog, nous partagerons :
 - Des actualités sur l'agence
 
 Restez connectés pour ne rien manquer de nos prochains articles !`,
-    coverImage: '/placeholder.svg',
+    coverImage: '/blog/blog-1772614271084.png',
     category: 'actualites',
     author: {
       name: 'L\'équipe Oenoros',
       role: 'Agence de communication viticole',
     },
-    publishedAt: '2026-03-01',
+    publishedAt: '2026-03-04',
     readTime: 3,
     tags: ['bienvenue', 'actualités', 'agence'],
     seo: {
