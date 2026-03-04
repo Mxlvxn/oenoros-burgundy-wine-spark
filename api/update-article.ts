@@ -1,19 +1,24 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-interface UpdateData {
-  articleId: string;
-  updates: {
-    title?: string;
-    excerpt?: string;
-    content?: string;
-    category?: string;
-    tags?: string[];
-    readTime?: number;
-    seo?: {
-      metaTitle?: string;
-      metaDescription?: string;
-      keywords?: string[];
-    };
+interface ArticleData {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  coverImage: string;
+  category: string;
+  author: {
+    name: string;
+    role: string;
+  };
+  publishedAt: string;
+  readTime: number;
+  tags: string[];
+  seo: {
+    metaTitle: string;
+    metaDescription: string;
+    keywords: string[];
   };
 }
 
@@ -34,7 +39,7 @@ export default async function handler(
   }
 
   try {
-    const { articleId, updates } = req.body as UpdateData;
+    const { articleId, updates } = req.body;
 
     if (!articleId || !updates) {
       return res.status(400).json({ error: 'ID et modifications requis' });
@@ -65,31 +70,75 @@ export default async function handler(
     }
 
     const fileData: any = await getResponse.json();
-    let content = Buffer.from(fileData.content, 'base64').toString('utf-8');
+    const currentContent = Buffer.from(fileData.content, 'base64').toString('utf-8');
 
-    // 2. Modifier les champs demandés
-    if (updates.title) {
-      content = content.replace(
-        new RegExp(`(id:\\s*'${articleId}'[\\s\\S]*?title:\\s*')[^']*'`, 'g'),
-        `$1${updates.title.replace(/'/g, "\\'")}',`
-      );
+    // 2. Trouver et remplacer l'article complet
+    const lines = currentContent.split('\n');
+    let articleStart = -1;
+    let articleEnd = -1;
+    let braceCount = 0;
+    let foundArticle = false;
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      
+      if (line.includes(`id: '${articleId}'`)) {
+        // Remonter pour trouver le début de l'objet
+        for (let j = i; j >= 0; j--) {
+          if (lines[j].trim().startsWith('{')) {
+            articleStart = j;
+            foundArticle = true;
+            braceCount = 1;
+            break;
+          }
+        }
+      }
+
+      if (foundArticle && i >= articleStart) {
+        const openBraces = (line.match(/{/g) || []).length;
+        const closeBraces = (line.match(/}/g) || []).length;
+        braceCount += openBraces - closeBraces;
+        
+        if (braceCount === 0) {
+          articleEnd = i;
+          break;
+        }
+      }
     }
 
-    if (updates.excerpt) {
-      content = content.replace(
-        new RegExp(`(id:\\s*'${articleId}'[\\s\\S]*?excerpt:\\s*')[^']*'`, 'g'),
-        `$1${updates.excerpt.replace(/'/g, "\\'")}',`
-      );
+    if (articleStart === -1 || articleEnd === -1) {
+      return res.status(404).json({ error: 'Article non trouvé' });
     }
 
-    if (updates.content) {
-      content = content.replace(
-        new RegExp(`(id:\\s*'${articleId}'[\\s\\S]*?content:\\s*\`)[^\`]*\``, 'g'),
-        `$1${updates.content.replace(/`/g, '\\`')}\`,`
-      );
-    }
+    // 3. Générer le nouvel article
+    const updatedArticle = updates as ArticleData;
+    const newArticleCode = `  {
+    id: '${updatedArticle.id}',
+    slug: '${updatedArticle.slug}',
+    title: '${updatedArticle.title.replace(/'/g, "\\'")}',
+    excerpt: '${updatedArticle.excerpt.replace(/'/g, "\\'")}',
+    content: \`${updatedArticle.content.replace(/`/g, '\\`')}\`,
+    coverImage: '${updatedArticle.coverImage}',
+    category: '${updatedArticle.category}',
+    author: {
+      name: '${updatedArticle.author.name.replace(/'/g, "\\'")}',
+      role: '${updatedArticle.author.role.replace(/'/g, "\\'")}',
+    },
+    publishedAt: '${updatedArticle.publishedAt}',
+    readTime: ${updatedArticle.readTime},
+    tags: [${updatedArticle.tags.map(t => `'${t.replace(/'/g, "\\'")}'`).join(', ')}],
+    seo: {
+      metaTitle: '${updatedArticle.seo.metaTitle.replace(/'/g, "\\'")}',
+      metaDescription: '${updatedArticle.seo.metaDescription.replace(/'/g, "\\'")}',
+      keywords: [${updatedArticle.seo.keywords.map(k => `'${k.replace(/'/g, "\\'")}'`).join(', ')}],
+    },
+  },`;
 
-    // 3. Pusher les modifications
+    // 4. Remplacer l'ancien article par le nouveau
+    lines.splice(articleStart, articleEnd - articleStart + 1, newArticleCode);
+    const newContent = lines.join('\n');
+
+    // 5. Pusher sur GitHub
     const updateResponse = await fetch(
       `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}`,
       {
@@ -100,8 +149,8 @@ export default async function handler(
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          message: `✏️ Modification article ID: ${articleId}`,
-          content: Buffer.from(content, 'utf-8').toString('base64'),
+          message: `✏️ Modification article: ${updatedArticle.title}`,
+          content: Buffer.from(newContent, 'utf-8').toString('base64'),
           sha: fileData.sha,
           branch: 'main',
         }),
@@ -109,7 +158,8 @@ export default async function handler(
     );
 
     if (!updateResponse.ok) {
-      throw new Error('Erreur GitHub lors de la modification');
+      const error = await updateResponse.json();
+      throw new Error(`Erreur GitHub: ${JSON.stringify(error)}`);
     }
 
     return res.status(200).json({ 
