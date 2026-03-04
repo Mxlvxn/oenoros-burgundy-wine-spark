@@ -1,8 +1,4 @@
-import { NextRequest } from 'next/server';
-
-export const config = {
-  runtime: 'edge',
-};
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 interface ArticleData {
   id: string;
@@ -26,47 +22,63 @@ interface ArticleData {
   };
 }
 
-export default async function handler(req: NextRequest) {
+export default async function handler(
+  req: VercelRequest,
+  res: VercelResponse
+) {
+  // CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   if (req.method !== 'POST') {
-    return new Response('Method not allowed', { status: 405 });
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    const articleData: ArticleData = await req.json();
+    const articleData = req.body as ArticleData;
 
-    // Récupérer le token GitHub depuis les variables d'environnement
+    // Validation
+    if (!articleData.title || !articleData.content) {
+      return res.status(400).json({ error: 'Titre et contenu requis' });
+    }
+
+    // Configuration GitHub
     const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-    const GITHUB_OWNER = 'Mxlvxn'; // Ton username GitHub
+    const GITHUB_OWNER = 'Mxlvxn';
     const GITHUB_REPO = 'oenoros-burgundy-wine-spark';
     const FILE_PATH = 'src/data/blogPosts.ts';
 
     if (!GITHUB_TOKEN) {
-      return new Response(
-        JSON.stringify({ error: 'GitHub token non configuré' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
-      );
+      return res.status(500).json({ 
+        error: 'Token GitHub non configuré. Configure GITHUB_TOKEN dans Vercel.' 
+      });
     }
 
-    // 1. Récupérer le contenu actuel de blogPosts.ts
-    const getFileResponse = await fetch(
+    // 1. Récupérer le fichier actuel
+    const getResponse = await fetch(
       `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}`,
       {
         headers: {
-          Authorization: `Bearer ${GITHUB_TOKEN}`,
-          Accept: 'application/vnd.github.v3+json',
+          'Authorization': `Bearer ${GITHUB_TOKEN}`,
+          'Accept': 'application/vnd.github.v3+json',
         },
       }
     );
 
-    if (!getFileResponse.ok) {
-      throw new Error('Impossible de récupérer le fichier blogPosts.ts');
+    if (!getResponse.ok) {
+      throw new Error('Impossible de récupérer blogPosts.ts');
     }
 
-    const fileData = await getFileResponse.json();
-    const currentContent = atob(fileData.content); // Décoder le base64
+    const fileData: any = await getResponse.json();
+    const currentContent = Buffer.from(fileData.content, 'base64').toString('utf-8');
 
-    // 2. Créer le code du nouvel article
-    const newArticleCode = `  {
+    // 2. Générer le code du nouvel article
+    const articleCode = `  {
     id: '${articleData.id}',
     slug: '${articleData.slug}',
     title: '${articleData.title.replace(/'/g, "\\'")}',
@@ -88,61 +100,54 @@ export default async function handler(req: NextRequest) {
     },
   },`;
 
-    // 3. Insérer le nouvel article après la ligne "export const blogPosts: BlogPost[] = ["
+    // 3. Insérer l'article après "export const blogPosts: BlogPost[] = ["
     const lines = currentContent.split('\n');
-    const exportLineIndex = lines.findIndex(line => 
+    const exportIndex = lines.findIndex(line => 
       line.includes('export const blogPosts: BlogPost[] = [')
     );
 
-    if (exportLineIndex === -1) {
-      throw new Error('Structure de blogPosts.ts non reconnue');
+    if (exportIndex === -1) {
+      throw new Error('Structure blogPosts.ts invalide');
     }
 
-    // Insérer le nouvel article après la ligne d'export
-    lines.splice(exportLineIndex + 1, 0, newArticleCode);
+    lines.splice(exportIndex + 1, 0, articleCode);
     const newContent = lines.join('\n');
 
-    // 4. Pusher le nouveau contenu sur GitHub
-    const updateFileResponse = await fetch(
+    // 4. Pusher sur GitHub
+    const updateResponse = await fetch(
       `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}`,
       {
         method: 'PUT',
         headers: {
-          Authorization: `Bearer ${GITHUB_TOKEN}`,
-          Accept: 'application/vnd.github.v3+json',
+          'Authorization': `Bearer ${GITHUB_TOKEN}`,
+          'Accept': 'application/vnd.github.v3+json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          message: `Nouvel article: ${articleData.title}`,
-          content: btoa(newContent), // Encoder en base64
-          sha: fileData.sha, // SHA du fichier actuel (requis)
+          message: `✨ Nouvel article: ${articleData.title}`,
+          content: Buffer.from(newContent, 'utf-8').toString('base64'),
+          sha: fileData.sha,
           branch: 'main',
         }),
       }
     );
 
-    if (!updateFileResponse.ok) {
-      const error = await updateFileResponse.json();
+    if (!updateResponse.ok) {
+      const error = await updateResponse.json();
       throw new Error(`Erreur GitHub: ${JSON.stringify(error)}`);
     }
 
-    return new Response(
-      JSON.stringify({ 
-        success: true, 
-        message: 'Article publié avec succès !',
-        slug: articleData.slug
-      }),
-      { status: 200, headers: { 'Content-Type': 'application/json' } }
-    );
+    return res.status(200).json({ 
+      success: true,
+      message: 'Article publié avec succès !',
+      slug: articleData.slug
+    });
 
-  } catch (error) {
-    console.error('Erreur publication:', error);
-    return new Response(
-      JSON.stringify({ 
-        error: 'Erreur lors de la publication',
-        details: error instanceof Error ? error.message : 'Erreur inconnue'
-      }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
+  } catch (error: any) {
+    console.error('❌ Erreur:', error);
+    return res.status(500).json({ 
+      error: 'Erreur lors de la publication',
+      details: error.message 
+    });
   }
 }
