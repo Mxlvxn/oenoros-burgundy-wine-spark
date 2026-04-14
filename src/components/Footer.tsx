@@ -24,7 +24,7 @@ const Footer = () => {
               />
             </Link>
             <p className="font-body text-primary-foreground/60 text-sm max-w-sm leading-relaxed italic">
-              Agence de communication premium spécialisée dans l'univers du vin.
+              Agence de Marketing & Stratégie spécialisée dans l'univers du vin.
               Basés à Dijon, nous accompagnons les acteurs viticoles vers l'excellence.
             </p>
           </div>
@@ -70,7 +70,7 @@ const Footer = () => {
                   Instagram
                 </a>
                 <a
-                  href="https://www.linkedin.com/in/melvyn-guepet/"
+                  href="https://www.linkedin.com/company/oenoros/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 font-body text-sm text-primary-foreground/50 hover:text-gold transition-all group"
@@ -90,11 +90,11 @@ const Footer = () => {
                   +33 7 66 40 98 54
                 </a>
                 <a
-                  href="mailto:contact@oenoros.fr"
+                  href="mailto:contact@oenoros.com"
                   className="flex items-center gap-3 font-body text-sm text-primary-foreground/50 hover:text-gold transition-all group"
                 >
                   <Mail size={18} className="group-hover:scale-110 transition-transform" />
-                  contact@oenoros.fr
+                  contact@oenoros.com
                 </a>
                 <span className="flex items-center gap-3 font-body text-sm text-primary-foreground/50">
                   <MapPin size={18} />
@@ -130,7 +130,7 @@ const Footer = () => {
           </div>
 
           <p className="font-body text-[11px] text-primary-foreground/30 tracking-widest uppercase">
-            Agence de marketing viticole — Dijon
+            Agence de marketing & stratégie viticole — Dijon
           </p>
         </div>
 
