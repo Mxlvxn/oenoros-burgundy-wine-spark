@@ -224,7 +224,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="font-body text-[10px] uppercase tracking-[0.2em] text-muted-foreground/50 mb-1">Email</p>
-                    <p className="font-body text-sm text-foreground group-hover:text-primary transition-colors duration-300">contact@oenoros.fr</p>
+                    <p className="font-body text-sm text-foreground group-hover:text-primary transition-colors duration-300">contact@oenoros.com</p>
                   </div>
                 </a>
 
