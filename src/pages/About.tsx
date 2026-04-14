@@ -173,7 +173,7 @@ const About = () => {
                 </p>
                 <p className="font-body text-sm text-muted-foreground leading-relaxed">
                   Basés à Dijon, au cœur de la Bourgogne, nous sommes à distance raisonnable 
-                  de la plupart des grands domaines français — et nous n'hésitons pas à nous déplacer.
+                  de la plupart des grands domaines français, et nous n'hésitons pas à nous déplacer.
                 </p>
               </div>
             </AnimatedSection>
@@ -181,7 +181,7 @@ const About = () => {
             <AnimatedSection delay={0.15}>
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { label: "Réactivité", desc: "Réponse sous 24h, toujours.", icon: "⚡" },
+                  { label: "Réactivité", desc: "Réponse sous 24h, toujours.", icon: "⌯" },
                   { label: "Transparence", desc: "Pas de surprise sur les budgets ou les délais.", icon: "◎" },
                   { label: "Expertise", desc: "Une connaissance réelle du monde du vin.", icon: "◈" },
                   { label: "Résultats", desc: "Des actions mesurées, des résultats concrets.", icon: "↗" },
@@ -220,7 +220,7 @@ const About = () => {
               de vous <span className="italic text-primary">rencontrer</span>
             </h2>
             <p className="font-body text-muted-foreground text-base max-w-lg mx-auto mb-14 leading-relaxed">
-              Partagez-nous votre projet — même si vous ne savez pas encore 
+              Partagez-nous votre projet, même si vous ne savez pas encore 
               exactement par où commencer. C'est justement pour ça que nous sommes là.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
