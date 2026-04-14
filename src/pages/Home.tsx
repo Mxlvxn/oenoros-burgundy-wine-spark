@@ -96,7 +96,7 @@ const Home = () => {
             className="font-body text-[11px] text-gold tracking-[0.35em] uppercase mb-8 flex items-center gap-3"
           >
             <span className="w-10 h-px bg-gold" />
-            Agence de communication viticole — Bourgogne
+            Agence de marketing & stratégie viticole — Bourgogne
           </motion.p>
 
           <motion.h1
@@ -233,7 +233,7 @@ const Home = () => {
           </AnimatedText>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
             {[
-              { value: "3", label: "Années d'expertise" },
+              { value: "1", label: "Années d'expertise" },
               { value: "∞", label: "Passion pour le vin" },
               { value: "100%", label: "Clients satisfaits" },
               { value: "360°", label: "Approche globale" },
