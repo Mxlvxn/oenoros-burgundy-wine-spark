@@ -8,7 +8,7 @@ const services = [
   {
     icon: Palette,
     title: "Identité de Marque",
-    description: "Logo, charte graphique, packaging, étiquettes. Tout ce qui fait qu'on vous reconnaît — et qu'on se souvient de vous.",
+    description: "Logo, charte graphique, packaging, étiquettes. Tout ce qui fait que l'on vous reconnaît, et qu'on se souvient de vous.",
     tag: "Branding",
     detail: "Naming, identité visuelle, système de marque complet",
   },
@@ -29,7 +29,7 @@ const services = [
   {
     icon: TrendingUp,
     title: "Développement Commercial",
-    description: "Export, positionnement, nouvelles cibles. On vous aide à grandir intelligemment, sans perdre ce qui vous rend unique.",
+    description: "Export, positionnement, nouvelles cibles. Nous vous aidons à grandir intelligemment, sans perdre ce qui vous rend unique.",
     tag: "Croissance",
     detail: "Stratégie export, segmentation, pricing",
   },
@@ -43,7 +43,7 @@ const services = [
   {
     icon: Users,
     title: "Relations Presse & Influence",
-    description: "Journalistes, influenceurs, médias spécialisés. On ouvre les bonnes portes pour amplifier votre rayonnement.",
+    description: "Journalistes, influenceurs, médias spécialisés. Nous vous ouvrons les bonnes portes pour amplifier votre rayonnement.",
     tag: "Relations",
     detail: "RP, partenariats, placements médias",
   },
@@ -72,8 +72,8 @@ const Services = () => {
             </AnimatedText>
             <AnimatedText delay={0.2}>
               <p className="font-body text-base text-muted-foreground leading-relaxed max-w-xl">
-                Pas de formules toutes faites. On prend le temps de comprendre 
-                votre domaine, vos ambitions et votre marché — puis on construit 
+                Pas de formules toutes faites. Nous prenons le temps de comprendre 
+                votre domaine, vos ambitions et votre marché — puis nous construisons 
                 ce qui vous correspond vraiment.
               </p>
             </AnimatedText>
@@ -185,7 +185,7 @@ const Services = () => {
             </p>
             <h2 className="font-display text-5xl md:text-6xl lg:text-7xl text-foreground mb-8 leading-[1.0]">
               Prêt à faire<br />
-              <span className="italic text-primary">rayonner</span> votre maison ?
+              <span className="italic text-primary">rayonner</span> votre entreprise ?
             </h2>
             <p className="font-body text-muted-foreground text-base max-w-lg mx-auto mb-14 leading-relaxed">
               Parlons de votre projet et trouvons la stratégie qui vous correspond — 
